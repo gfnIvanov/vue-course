@@ -1,16 +1,30 @@
 <script setup lang="ts">
-import { ButtonProps } from '../types.js'
+import { computed } from 'vue';
+import { empty } from '../../services/utils';
+import type { ButtonProps } from '../types.js'
 
-defineProps<ButtonProps>();
+const props = defineProps<ButtonProps>();
+
+const getClasses = computed(() => {
+    const btnClasses = []
+    if (empty(props.image)) {
+        btnClasses.push('underline');
+    } 
+    if (props.noPad) {
+        btnClasses.push('no-pad');
+    }
+    return btnClasses;
+});
+
 </script>
 
 <template>
-    <dev>
-        <button>
-            <img v-if="image !== undefined" :src="`src/assets/${image}`" :alt="text" />
+    <div>
+        <button :class="getClasses">
+            <img v-if="!empty(image)" :src="`src/assets/${image}`" :alt="text" />
             <span v-else>{{ text }}</span>
         </button>
-    </dev>
+    </div>
 </template>
 
 <style scoped lang="scss">
@@ -20,19 +34,26 @@ button {
     background-color: white;
     padding: 0.5em 1.1em;
     font-size: 1.3em;
-    font-weight: 500;
+    font-weight: 360;
     font-family: inherit;
     cursor: pointer;
     transition: border-color 0.3s;
 }
-button:hover {
+
+button.no-pad {
+    padding: 0;
+}
+
+button.underline:hover {
     border-bottom: 2px solid gainsboro;
 }
-button:active {
+
+button.underline:active {
     border-bottom: 2px solid gainsboro;
 }
-button:focus,
-button:focus-visible {
+
+button.underline:focus,
+button.stylize:focus-visible {
     border-bottom: 2px solid gainsboro;
     outline: 4px auto -webkit-focus-ring-color;
 }

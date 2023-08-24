@@ -1,17 +1,12 @@
 <script setup lang="ts">
-import axios from 'axios';
+import CardProduct from './common/CardProduct.vue'
 import { ref, onMounted } from 'vue';
-import { ProductData } from './types';
+import { getProducts } from '../services/getProducts';
+import type { ProductData } from './types';
+import SearchField from './common/SearchField.vue';
 
-let products = ref({} as Array<ProductData>);
-const getProducts = async function() {
-    try {
-        const res = await axios.get('https://fakestoreapi.com/products?limit=5');
-        return res.data;
-    } catch(e) {
-        console.log(e);
-    }
-};
+let products = ref([] as ProductData[]);
+
 
 onMounted(async () => {
     products.value = await getProducts();
@@ -20,7 +15,11 @@ onMounted(async () => {
 
 <template>
     <div class="catalog">
-        <div class="card" v-for="product in products" :key="product.id">{{ product.title }}</div>
+        <div class="mt-10">
+            <SearchField />
+        </div>
+        <div v-if="products.length === 0" class="sys-message">No products</div>
+        <CardProduct v-for="product in products" :key="product.id" :data="product" />
     </div>
 </template>
 
@@ -28,10 +27,5 @@ onMounted(async () => {
     .catalog {
         position: relative;
         top: 82px;
-
-        .card {
-            padding: 5px;
-            text-align: center;
-        }
     }
 </style>

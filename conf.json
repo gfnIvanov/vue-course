@@ -1,0 +1,6 @@
+{
+  "fakestoreapi": {
+    "url": "https://fakestoreapi.com/products",
+    "limit": 5
+  }
+}
