@@ -1,45 +1,56 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import Button from './Button.vue';
 
+let text = ref('');
+
+const emit = defineEmits(['searchProducts', 'getAll']);
+
+const inputKeyUp = function(event: KeyboardEvent) {
+    if (text.value.length > 2) {
+        emit('searchProducts', text.value);
+    }
+    if (text.value.length < 3 && event.key === 'Backspace') {
+        emit('getAll');
+    }
+};
 </script>
 
 <template>
     <div class="search-field">
         <form>
-            <input type="text" placeholder="Search here...">
-            <button type="submit"></button>
+            <div class="flexbox">
+                <div class="input-block">
+                    <input type="text" placeholder="Search here..." @keyup="inputKeyUp" v-model="text">
+                </div>
+                <Button text="Basket" image="search.svg" :no-pad="true" />
+            </div>
         </form>
     </div>
 </template>
 
 <style scoped lang="scss">
-form {
-    position: relative;
+.search-field {
+    border: 1px solid gainsboro;
     width: 600px;
     margin: 0 auto;
-}
-input, button {
-    border: none;
-    outline: none;
-    background: transparent;
-}
-input {
-    border: 1px solid gainsboro;
-    width: 100%;
-    height: 42px;
-    padding-left: 15px;
-}
-button {
-    height: 42px;
-    width: 42px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    cursor: pointer;
-}
-button:before {
-    content: "\f002";
-    font-family: FontAwesome;
-    font-size: 16px;
-    color: #F9F0DA;
+
+    .input-block {
+        width: 570px;
+
+        input {
+            outline: none;
+            background: transparent;
+            border: none;
+            width: 100%;
+            height: 42px;
+            padding-left: 15px;
+        }
+    }
+
+    .button-block {
+        margin-top: 12px;
+        opacity: 0.5;
+    }
 }
 </style>

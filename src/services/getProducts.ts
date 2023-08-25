@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { fakestoreapi } from '../../conf.json';
-import type { ProductData } from '../components/types';
+import type { ProductData } from '@/types';
 
 export const getProducts = async function(): Promise<ProductData[]> {
     try {

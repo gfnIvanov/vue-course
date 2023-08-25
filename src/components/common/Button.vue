@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { empty } from '../../services/utils';
-import type { ButtonProps } from '../types.js'
+import { empty } from '@/services/utils';
+import type { ButtonProps } from '@/types.js'
 
 const props = defineProps<ButtonProps>();
 
@@ -19,11 +19,12 @@ const getClasses = computed(() => {
 </script>
 
 <template>
-    <div>
-        <button :class="getClasses">
+    <div class="button-block">
+        <button :class="getClasses" @click="action">
             <img v-if="!empty(image)" :src="`src/assets/${image}`" :alt="text" />
             <span v-else>{{ text }}</span>
         </button>
+        <slot></slot>
     </div>
 </template>
 
@@ -38,6 +39,10 @@ button {
     font-family: inherit;
     cursor: pointer;
     transition: border-color 0.3s;
+}
+
+button:active {
+    opacity: 0.5;
 }
 
 button.no-pad {
@@ -57,4 +62,4 @@ button.stylize:focus-visible {
     border-bottom: 2px solid gainsboro;
     outline: 4px auto -webkit-focus-ring-color;
 }
-</style>
+</style>../../types.js
