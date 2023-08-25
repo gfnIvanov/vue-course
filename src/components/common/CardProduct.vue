@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import Button from './Button.vue';
-import type { ProductData } from '../types.js'
+import type { ProductData } from '@/types.js'
 
-defineProps<{ data: ProductData }>();
+const props = defineProps<{ data: ProductData }>();
+
+const emit = defineEmits(['addProduct']);
+
+const btnOnClick = function() {
+    emit('addProduct', props.data);
+};
 </script>
 
 <template>
@@ -11,7 +17,7 @@ defineProps<{ data: ProductData }>();
         <div>{{ data.title }}</div>
         <div class="flexbox pt-15">
             <div class="pr-20"><b>${{ data.price }}</b></div>
-            <div><Button text="ToBasket" image="shopping-cart.svg" :no-pad="true" /></div>
+            <Button text="ToBasket" :action="btnOnClick" image="shopping-cart.svg" :no-pad="true" />
         </div>
         <fieldset>
             <legend>Description</legend>
@@ -32,4 +38,8 @@ defineProps<{ data: ProductData }>();
             border: 1px solid gainsboro;
         }
     }
-</style>
+
+    .flexbox {
+        justify-content: center;
+    }
+</style>../../types.js

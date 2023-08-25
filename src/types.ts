@@ -1,7 +1,9 @@
 export type ButtonProps = {
     text: string
+    action?: any
     image?: string
     noPad?: boolean
+    count?: number
 }
 
 export type ProductData = {
