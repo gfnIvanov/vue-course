@@ -21,7 +21,12 @@ const inputKeyUp = function(event: KeyboardEvent) {
         <form>
             <div class="flexbox">
                 <div class="input-block">
-                    <input type="text" placeholder="Search here..." @keyup="inputKeyUp" v-model="text">
+                    <input 
+                        type="text" 
+                        placeholder="Search here..." 
+                        @keyup="inputKeyUp" 
+                        v-model="text"
+                    >
                 </div>
                 <Button text="Basket" image="search.svg" :no-pad="true" />
             </div>
@@ -37,15 +42,6 @@ const inputKeyUp = function(event: KeyboardEvent) {
 
     .input-block {
         width: 570px;
-
-        input {
-            outline: none;
-            background: transparent;
-            border: none;
-            width: 100%;
-            height: 42px;
-            padding-left: 15px;
-        }
     }
 
     .button-block {

@@ -1,6 +1,19 @@
-export const empty = function(v: any): boolean {
-    if (Array.isArray(v)) {
-        return v.length === 0;
-    }
-    return v === undefined || v === null || v === '' || v === 0;
+export const empty = function(...values: any[]): boolean {
+    const results = [];
+    values.forEach((v: any) => {
+        let subRes;
+        if (Array.isArray(v)) {
+            if (v.length === 0) {
+                results.push(true);
+                return;
+            }
+        }
+        subRes = v === undefined || v === null || v === '' || v === 0;
+        subRes && results.push(true);
+    });
+    return results.length === values.length;
+};
+
+export const removeSpanTags = function(text: string) {
+    return text.replaceAll('<span style="background:gainsboro;">', '').replaceAll('</span>', '');
 };

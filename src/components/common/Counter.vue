@@ -10,7 +10,7 @@ defineProps<{ count?: number }>();
 .counter {
     position: absolute;
     top: 45px;
-    right: 230px;
+    right: 278px;
     width: 18px;
     height: 18px;
     background-color: red;

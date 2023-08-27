@@ -20,7 +20,7 @@ const getClasses = computed(() => {
 
 <template>
     <div class="button-block">
-        <button :class="getClasses" @click="action">
+        <button :class="getClasses">
             <img v-if="!empty(image)" :src="`src/assets/${image}`" :alt="text" />
             <span v-else>{{ text }}</span>
         </button>
@@ -62,4 +62,4 @@ button.stylize:focus-visible {
     border-bottom: 2px solid gainsboro;
     outline: 4px auto -webkit-focus-ring-color;
 }
-</style>../../types.js
+</style>
