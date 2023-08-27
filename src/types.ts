@@ -1,9 +1,7 @@
 export type ButtonProps = {
     text: string
-    action?: any
     image?: string
     noPad?: boolean
-    count?: number
 }
 
 export type ProductData = {
@@ -17,4 +15,15 @@ export type ProductData = {
         rate: number
         count: number
     }
+}
+
+export type HeaderProps = {
+    productCount: number
+    logBtnText: string
+}
+
+export type FilterFields = {
+    priceFrom: number
+    priceTo: number 
+    selectCategory: string
 }

@@ -14,10 +14,10 @@ const btnOnClick = function() {
 <template>
     <div class="card">
         <div><img :src="data.image" width="200" height="220" vspace="50" /></div>
-        <div>{{ data.title }}</div>
+        <div v-html="data.title"></div>
         <div class="flexbox pt-15">
             <div class="pr-20"><b>${{ data.price }}</b></div>
-            <Button text="ToBasket" :action="btnOnClick" image="shopping-cart.svg" :no-pad="true" />
+            <Button text="ToBasket" @click="btnOnClick" image="shopping-cart.svg" :no-pad="true" />
         </div>
         <fieldset>
             <legend>Description</legend>
@@ -42,4 +42,4 @@ const btnOnClick = function() {
     .flexbox {
         justify-content: center;
     }
-</style>../../types.js
+</style>
