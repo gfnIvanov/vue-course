@@ -1,5 +1,6 @@
 export type ButtonProps = {
     text: string
+    active?: boolean
     image?: string
     noPad?: boolean
 }
@@ -27,3 +28,8 @@ export type FilterFields = {
     priceTo: number 
     selectCategory: string
 }
+
+export type MenuButtons = {
+    Catalog: boolean
+    Contacts: boolean
+};

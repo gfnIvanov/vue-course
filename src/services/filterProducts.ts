@@ -1,6 +1,7 @@
 import { empty, removeSpanTags } from "./utils";
 import type { FilterFields, ProductData } from "@/types";
 
+
 export const _searchProducts = function(text: string, productsMutable: ProductData[]) {
     let regexp = new RegExp(text, 'i');
     return productsMutable.filter(data => {
@@ -15,7 +16,6 @@ export const _searchProducts = function(text: string, productsMutable: ProductDa
 };
 
 export const _useFilter = function(filter: FilterFields, productsOrigin: ProductData[]) {
-    console.log(filter)
     return productsOrigin.filter(data => {
         if (!empty(filter.priceFrom) && !empty(filter.priceTo) && !empty(filter.selectCategory)) {
             if (+data.price >= filter.priceFrom 

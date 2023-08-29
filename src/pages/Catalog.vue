@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CardProduct from '@/components/common/CardProduct.vue'
+import CardProduct from '@/components/common/CardProduct.vue';
 import SearchField from '@/components/common/SearchField.vue';
 import Button from '@/components/common/Button.vue';
 import Filter from '@/components/Filter.vue';
@@ -9,9 +9,11 @@ import { removeSpanTags } from '@/services/utils';
 import type { FilterFields, ProductData } from '@/types.js';
 import { _useFilter, _searchProducts } from '@/services/filterProducts';
 
+
 let productsOrigin: ProductData[];
 const productsMutable = ref([] as ProductData[]);
 const showFilter = ref(false);
+const beforeProducts = ref('Loading...');
 const categories = new Set<string>();
 
 const emit = defineEmits(['addProduct']);
@@ -36,7 +38,8 @@ const getAllProducts = function() {
 };
 
 onMounted(async () => {
-    const res = await getProducts();
+    let res = await getProducts();
+    beforeProducts.value = 'No products';
     productsOrigin = res;
     productsMutable.value = res;
     res.forEach(data => {
@@ -58,7 +61,7 @@ onMounted(async () => {
             />
         </div>
         <Filter v-if="showFilter" :categories="categories" @use-filter="useFilter" />
-        <div v-if="productsMutable.length === 0" class="sys-message">No products</div>
+        <div v-if="productsMutable.length === 0" class="sys-message">{{ beforeProducts }}</div>
         <CardProduct 
             v-for="product in productsMutable" 
             :key="product.id" 
@@ -69,9 +72,10 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="scss">
+    @import '@/style.scss';
+
     .catalog {
-        position: relative;
-        top: 82px;
+        @include content;
 
         .button-block {
             height: 20px;

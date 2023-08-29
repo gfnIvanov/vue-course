@@ -2,5 +2,8 @@
   "fakestoreapi": {
     "url": "https://fakestoreapi.com/products",
     "limit": 5
+  },
+  "github": {
+    "link": "https://github.com/gfnIvanov/vue-course/"
   }
 }

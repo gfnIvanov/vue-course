@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { empty } from '@/services/utils';
-import type { ButtonProps } from '@/types.js'
+import type { ButtonProps } from '@/types.js';
+
 
 const props = defineProps<ButtonProps>();
 
@@ -12,6 +13,9 @@ const getClasses = computed(() => {
     } 
     if (props.noPad) {
         btnClasses.push('no-pad');
+    }
+    if (props.active) {
+        btnClasses.push('active');
     }
     return btnClasses;
 });
@@ -53,6 +57,7 @@ button.underline:hover {
     border-bottom: 2px solid gainsboro;
 }
 
+button.active,
 button.underline:active {
     border-bottom: 2px solid gainsboro;
 }
