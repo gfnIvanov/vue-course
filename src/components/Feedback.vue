@@ -5,6 +5,7 @@ import { useForm } from 'vee-validate';
 import { ref } from 'vue';
 
 
+const mailFromAuth = ref<string | null>('');
 const isLoading = ref(false);
 
 defineProps<{ show: boolean }>();
@@ -13,59 +14,72 @@ const emit = defineEmits(['close', 'login']);
 
 const { setValues, errors, handleSubmit, defineInputBinds } = useForm({
     initialValues: {
-        login: '',
-        password: '',
+        email: '',
+        message: '',
     },
     validationSchema: yup.object({
-        login: yup.string().required(),
-        password: yup.string().min(6).required(),
+        email: yup.string().email().required(),
+        message: yup.string().required(),
     }),
 });
 
-const onSubmit = handleSubmit(formData => {
+const validateFromAuthSchema = yup.object({
+    emailFromAuth: yup.string().email()
+});
+
+const onSubmit = handleSubmit(() => {
     isLoading.value = true;
     setTimeout(() => {
-        isLoading.value = false;
-        localStorage.setItem('auth', formData.login);
         setValues({
-            login: '',
-            password: '',
+            email: '',
+            message: '',
         });
-        emit('login');
+        isLoading.value = false;
         emit('close');
     }, 1500);
 });
 
-const login = defineInputBinds('login');
-const password = defineInputBinds('password');
+const email = defineInputBinds('email');
+const message = defineInputBinds('message');
+
+const getEmailFromAuth = function() {
+    let mailName = localStorage.getItem('auth');
+    mailFromAuth.value = mailName;
+    return validateFromAuthSchema.isValidSync({ 
+        emailFromAuth: mailName
+    });
+}; 
 </script>
 
 <template>
     <div v-if="show" class="modal-mask">        
-        <div class="login-container">
+        <div class="feedback-container">
             <div class="close-btn-wrap">
                 <Button text="close" @click="$emit('close')" image="close.svg" :no-pad="true" />
             </div>
             <form @submit="onSubmit">
                 <div class="input-block">
-                    <input placeholder="Login" v-bind="login" :disabled="isLoading">
+                    <input placeholder="Email" v-bind="email" list="authMail" :disabled="isLoading">
+                    <datalist v-if="getEmailFromAuth()" id="authMail">
+                        <option>{{ mailFromAuth }}</option>
+                    </datalist>
                 </div>
-                <span class="warn">{{ errors.login }}</span>
+                <span class="warn">{{ errors.email }}</span>
                 <div class="input-block mt-10">
-                    <input type="password" placeholder="Password" v-bind="password" :disabled="isLoading">
+                    <textarea rows="5" placeholder="Message" v-bind="message" :disabled="isLoading"></textarea>
                 </div>
-                <span class="warn">{{ errors.password }}</span>
+                <span class="warn">{{ errors.message }}</span>
                 <div class="button-wrap">
-                    <Button :text="isLoading ? 'Loading...' : 'Log in'" :no-pad="true" />
+                    <Button :text="isLoading ? 'Loading...' : 'Send'" :no-pad="true" />
                 </div>
             </form>           
         </div>
     </div>
 </template>
 
-<style scoped lang="scss">        
-.login-container {
-    width: 300px;
+<style scoped lang="scss">
+ .feedback-container {
+    width: 500px;
     margin: auto;            
     padding: 10px 30px 20px;
     background-color: #fff;
@@ -73,8 +87,12 @@ const password = defineInputBinds('password');
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
 
+    textarea {
+        width: 470px;
+    }
+
     .input-block {
-        width: 300px;
+        width: 500px;
         border: 1px solid gainsboro;
     }
 

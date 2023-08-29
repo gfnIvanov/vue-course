@@ -1,29 +1,55 @@
 <script setup lang="ts">
 import Button from './common/Button.vue';
 import Counter from './common/Counter.vue';
+import { ref } from 'vue';
 import { empty } from '@/services/utils';
-import type { HeaderProps } from '@/types';
+import type { HeaderProps, MenuButtons } from '@/types';
+
 
 const props = defineProps<HeaderProps>();
 
-const emit = defineEmits(['showModal', 'logout']);
+const emit = defineEmits(['showLogin', 'logout']);
+
+const btnsActive = ref<MenuButtons>({
+    'Catalog': true,
+    'Contacts': false
+});
+
+const setBtnActive = function(btnName: keyof MenuButtons) {
+    for (const key in btnsActive.value) {
+        btnsActive.value[key as keyof MenuButtons] = (key === btnName);
+    }
+};
 
 const setLoginLogout = function() {
     if (props.logBtnText === 'Log out') {
+        localStorage.removeItem('auth');
         emit('logout');
         return;
     }
-    emit('showModal');
+    emit('showLogin');
 };
 </script>
 
 <template>
     <div class="header">
         <div class="catalog">
-            <Button text="Catalog" />
+            <RouterLink :to="{ name: 'Catalog' }">
+                <Button 
+                    text="Catalog" 
+                    @click="setBtnActive('Catalog')" 
+                    :active="btnsActive['Catalog']" 
+                />
+            </RouterLink>
         </div>
         <div class="contacts">
-            <Button text="Contacts" />
+            <RouterLink :to="{ name: 'Contacts' }">
+                <Button 
+                    text="Contacts" 
+                    @click="setBtnActive('Contacts')" 
+                    :active="btnsActive['Contacts']" 
+                />
+            </RouterLink>
         </div>
         <div class="basket">
             <Button text="Basket" image="shopping-cart.svg">

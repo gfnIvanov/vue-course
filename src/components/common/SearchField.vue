@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import Button from './Button.vue';
 
+
 let text = ref('');
 
 const emit = defineEmits(['searchProducts', 'getAll']);

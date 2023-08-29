@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Button from './Button.vue';
-import type { ProductData } from '@/types.js'
+import type { ProductData } from '@/types.js';
+
 
 const props = defineProps<{ data: ProductData }>();
 

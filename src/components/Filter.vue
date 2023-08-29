@@ -3,6 +3,7 @@ import Button from './common/Button.vue';
 import { ref } from 'vue';
 import { FilterFields } from '@/types';
 
+
 const priceFrom = ref('');
 const priceTo = ref('');
 const selectCategory = ref('All');

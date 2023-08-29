@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import Header from './components/Header.vue'
-import Catalog from './pages/Catalog.vue'
-import Login from './components/Login.vue'
+import Header from './components/Header.vue';
+import Login from './components/Login.vue';
+import Footer from './components/Footer.vue';
+import Feedback from './components/Feedback.vue';
 import { ref } from 'vue';
+import { empty } from './services/utils';
+
 
 const productCount = ref(0);
-const showModal = ref(false);
-const logBtnText = ref('Log in');
+const showLogin = ref(false);
+const showFeedback = ref(false);
+const logBtnText = ref(empty(localStorage.getItem('auth')) ? 'Log in' : 'Log out');
 
 const logIn = function() {
     logBtnText.value = 'Log out';
@@ -22,13 +26,17 @@ const logOut = function() {
         <Header 
             :product-count="productCount" 
             :log-btn-text="logBtnText" 
-            @show-modal="showModal = true" 
+            @show-login="showLogin = true" 
             @logout="logOut" 
         />
-        <Catalog @add-product="productCount += 1" />
+        <RouterView @add-product="productCount += 1" />
         <Teleport to="body">
-            <Login :show="showModal" @close="showModal = false" @login="logIn" />
+            <Login :show="showLogin" @close="showLogin = false" @login="logIn" />
         </Teleport>
+        <Teleport to="body">
+            <Feedback :show="showFeedback" @close="showFeedback = false" />
+        </Teleport>
+        <Footer @show-feedback="showFeedback = true" />
     </div>
 </template>
 
