@@ -15,5 +15,10 @@ export default defineConfig({
       "origin": "*",
       "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     }
+  },
+  build: {
+    rollupOptions: {
+      external: ["server"],
+    }
   }
 });

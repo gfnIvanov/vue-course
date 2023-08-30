@@ -3,6 +3,8 @@ import Button from './common/Button.vue';
 import * as yup from 'yup';
 import { useForm } from 'vee-validate';
 import { ref } from 'vue';
+import { checkUser } from '@/services/checkUser';
+import { empty } from '@/services/utils';
 
 
 const isLoading = ref(false);
@@ -11,7 +13,7 @@ defineProps<{ show: boolean }>();
 
 const emit = defineEmits(['close', 'login']);
 
-const { setValues, errors, handleSubmit, defineInputBinds } = useForm({
+const { setValues, setErrors, errors, handleSubmit, defineInputBinds } = useForm({
     initialValues: {
         login: '',
         password: '',
@@ -22,18 +24,26 @@ const { setValues, errors, handleSubmit, defineInputBinds } = useForm({
     }),
 });
 
-const onSubmit = handleSubmit(formData => {
+const onSubmit = handleSubmit(async formData => {
     isLoading.value = true;
-    setTimeout(() => {
-        isLoading.value = false;
-        localStorage.setItem('auth', formData.login);
-        setValues({
-            login: '',
-            password: '',
+    const { payload, error } = await checkUser(formData);
+    isLoading.value = false;
+    if (!empty(error)) {
+        setErrors({
+            password: error as string
         });
-        emit('login');
-        emit('close');
-    }, 1500);
+        return;
+    }
+    localStorage.setItem('auth', JSON.stringify({ 
+        login: formData.login, 
+        admin: payload?.admin 
+    }));
+    setValues({
+        login: '',
+        password: '',
+    });
+    emit('login');
+    emit('close');
 });
 
 const login = defineInputBinds('login');

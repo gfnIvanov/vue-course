@@ -65,6 +65,5 @@ button.underline:active {
 button.underline:focus,
 button.stylize:focus-visible {
     border-bottom: 2px solid gainsboro;
-    outline: 4px auto -webkit-focus-ring-color;
 }
 </style>

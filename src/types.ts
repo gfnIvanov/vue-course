@@ -33,3 +33,14 @@ export type MenuButtons = {
     Catalog: boolean
     Contacts: boolean
 };
+
+export type UserData = {
+    login: string
+    password: string
+    admin?: boolean
+}
+
+export type CheckUserRes = {
+    payload?: { admin: boolean }
+    error?: string
+}

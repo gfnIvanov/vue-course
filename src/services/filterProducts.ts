@@ -9,46 +9,22 @@ export const _searchProducts = function(text: string, productsMutable: ProductDa
         let matches = title.match(regexp) || [];
         if (matches.length > 0) {          
             let newStr = `<span style="background:gainsboro;">${matches[0]}</span>`;
-            data.title = title.replaceAll(matches[0], newStr);
+            data.title = title.replaceAll(matches[0] as string, newStr);
             return data;
         }
     });
 };
 
 export const _useFilter = function(filter: FilterFields, productsOrigin: ProductData[]) {
-    return productsOrigin.filter(data => {
-        if (!empty(filter.priceFrom) && !empty(filter.priceTo) && !empty(filter.selectCategory)) {
-            if (+data.price >= filter.priceFrom 
-                && +data.price <= filter.priceTo 
-                && data.category === filter.selectCategory) {
-                    return data;
-                }
-        } else if (!empty(filter.priceFrom) && !empty(filter.priceTo) && empty(filter.selectCategory)) {
-            if (+data.price >= filter.priceFrom && +data.price <= filter.priceTo) {
-                return data;
-            }
-        } else if (!empty(filter.priceFrom) && empty(filter.priceTo, filter.selectCategory)) {
-            if (+data.price >= filter.priceFrom) {
-                return data;
-            }
-        } else if (!empty(filter.priceTo) && empty(filter.priceFrom, filter.selectCategory)) {
-            if (+data.price <= filter.priceTo) {
-                return data;
-            }
-        } else if (!empty(filter.selectCategory) && empty(filter.priceFrom, filter.priceTo)) {
-            if (data.category === filter.selectCategory) {
-                return data;
-            }
-        } else if (!empty(filter.selectCategory) && !empty(filter.priceFrom) && empty(filter.priceTo)) {
-            if (+data.price >= filter.priceFrom && data.category === filter.selectCategory) {
-                    return data;
-                }
-        } else if (!empty(filter.selectCategory) && !empty(filter.priceTo) && empty(filter.priceFrom)) {
-            if (+data.price <= filter.priceTo && data.category === filter.selectCategory) {
-                    return data;
-                }
-        } else {
-            return data;
-        }
-    });
+    let filteredProducts = productsOrigin.slice(0);
+    if (!empty(filter.priceFrom)) {
+        filteredProducts = filteredProducts.filter(data => +data.price >= filter.priceFrom);
+    }
+    if (!empty(filter.priceTo)) {
+        filteredProducts = filteredProducts.filter(data => data.price <= filter.priceTo);
+    }
+    if (!empty(filter.selectCategory)) {
+        filteredProducts = filteredProducts.filter(data => data.category === filter.selectCategory);
+    }
+    return filteredProducts;
 };
