@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import Button from './Button.vue';
+import vuexStore from '@/store/vuex';
 import type { ProductData } from '@/types.js';
 
 
 const props = defineProps<{ data: ProductData }>();
 
-const emit = defineEmits(['addProduct']);
-
 const btnOnClick = function() {
-    emit('addProduct', props.data);
+    vuexStore.dispatch('addProductInBucket', props.data);
 };
 </script>
 
@@ -28,19 +27,19 @@ const btnOnClick = function() {
 </template>
 
 <style scoped lang="scss">
-    .card {
-        width: 600px;
-        padding: 5px;
-        text-align: center;
-        border-bottom: 2px solid gainsboro;
-        margin: auto;
+.card {
+    width: 600px;
+    padding: 5px;
+    text-align: center;
+    border-bottom: 2px solid gainsboro;
+    margin: auto;
 
-        fieldset {
-            border: 1px solid gainsboro;
-        }
+    fieldset {
+        border: 1px solid gainsboro;
     }
+}
 
-    .flexbox {
-        justify-content: center;
-    }
+.flexbox {
+    justify-content: center;
+}
 </style>

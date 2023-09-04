@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { server } from '../../conf.json';
-import type { UserData, CheckUserRes } from '@/types';
 import { empty } from './utils';
+import type { UserData, UsersResponse } from '@/types';
 
 
-export const checkUser = async function(userData: UserData): Promise<CheckUserRes> {
+export const checkUser = async function(userData: UserData): Promise<UsersResponse> {
     try {
         const fullLogin = userData.login.split(':');
         if (fullLogin[1] === 'admin') {
@@ -13,7 +13,7 @@ export const checkUser = async function(userData: UserData): Promise<CheckUserRe
         } else {
             userData.admin = false;
         }
-        const res = await axios.post(`${server.url}/check-user`, {
+        const res = await axios.post(`${server.url}/add-product`, {
             headers: {
                 origin: server.url
             },

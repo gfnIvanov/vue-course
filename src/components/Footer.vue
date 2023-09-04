@@ -14,31 +14,31 @@ import { github } from '../../conf.json';
 </template>
 
 <style scoped lang="scss">
-    .footer {
-        position: fixed;
-        bottom: 0;
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    z-index: 1000;
+
+    .line {
+        position: inherit;
         width: 100%;
-        height: 60px;
-        display: flex;
-        justify-content: space-between;
-        background-color: white;
-        z-index: 1000;
-
-        .line {
-            position: inherit;
-            width: 100%;
-            bottom: 60px;
-            height: 2px;
-            background-color: gray;
-        }
-
-        .github {
-            margin-top: 6px;
-        }
-
-        .writetous {
-            font-size: 12px;
-            margin: 12px;
-        }
+        bottom: 60px;
+        height: 2px;
+        background-color: gray;
     }
+
+    .github {
+        margin-top: 6px;
+    }
+
+    .writetous {
+        font-size: 12px;
+        margin: 12px;
+    }
+}
 </style>

@@ -12,19 +12,19 @@
 </template>
 
 <style scoped lang="scss">
-    @import '@/style.scss';
+@import '@/style.scss';
 
-    .contacts {
-        @include content;
-        text-align: center;
+.contacts {
+    @include content;
+    text-align: center;
 
-        .about {
-            margin-top: 20px;
-        }
-
-        .info {
-            width: 600px;
-            margin: auto;
-        }
+    .about {
+        margin-top: 20px;
     }
+
+    .info {
+        width: 600px;
+        margin: auto;
+    }
+}
 </style>

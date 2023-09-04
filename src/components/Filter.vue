@@ -48,29 +48,29 @@ const useFilter = function() {
 </template>
 
 <style scoped lang="scss">
-    .line {
-        width: 600px;
-        margin: auto;
-        border-bottom: 1px solid gainsboro;
-    }
+.line {
+    width: 600px;
+    margin: auto;
+    border-bottom: 1px solid gainsboro;
+}
 
-    .flexbox {
-        justify-content: center;
-        margin: 5px 0px 5px;
-    }
+.flexbox {
+    justify-content: center;
+    margin: 5px 0px 5px;
+}
 
-    .input-block {
-        width: 80px;
-        border: 1px solid gainsboro;
-        text-align: center;
-    }
+.input-block {
+    width: 80px;
+    border: 1px solid gainsboro;
+    text-align: center;
+}
 
-    .button-block {
-        text-align: center;
-        height: 20px;
-        font-size: 10px;
-        text-align: center;
-        color: gray;
-        padding: 5px;
-    }
+.button-block {
+    text-align: center;
+    height: 20px;
+    font-size: 10px;
+    text-align: center;
+    color: gray;
+    padding: 5px;
+}
 </style>

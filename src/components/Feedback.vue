@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import Button from './common/Button.vue';
+import InputBlock from './common/InputBlock.vue';
 import * as yup from 'yup';
+import vuexStore from '@/store/vuex';
 import { useForm } from 'vee-validate';
 import { ref } from 'vue';
 
@@ -43,7 +45,7 @@ const email = defineInputBinds('email');
 const message = defineInputBinds('message');
 
 const getEmailFromAuth = function() {
-    let mailName = localStorage.getItem('auth');
+    let mailName = vuexStore.getters.login;
     mailFromAuth.value = mailName;
     return validateFromAuthSchema.isValidSync({ 
         emailFromAuth: mailName
@@ -58,17 +60,26 @@ const getEmailFromAuth = function() {
                 <Button text="close" @click="$emit('close')" image="close.svg" :no-pad="true" />
             </div>
             <form @submit="onSubmit">
-                <div class="input-block">
-                    <input placeholder="Email" v-bind="email" list="authMail" :disabled="isLoading">
-                    <datalist v-if="getEmailFromAuth()" id="authMail">
-                        <option>{{ mailFromAuth }}</option>
-                    </datalist>
-                </div>
+                <InputBlock 
+                    block-type="input" 
+                    p-holder="Message" 
+                    :is-dis="isLoading" 
+                    :bind-var="email" 
+                    :error="errors.email"
+                    bind-list="authMail"
+                />
+                <datalist v-if="getEmailFromAuth()" id="authMail">
+                    <option>{{ mailFromAuth }}</option>
+                </datalist>
                 <span class="warn">{{ errors.email }}</span>
-                <div class="input-block mt-10">
-                    <textarea rows="5" placeholder="Message" v-bind="message" :disabled="isLoading"></textarea>
-                </div>
-                <span class="warn">{{ errors.message }}</span>
+                <InputBlock 
+                    block-type="textarea" 
+                    :rows="5"
+                    p-holder="Message" 
+                    :is-dis="isLoading" 
+                    :bind-var="message" 
+                    :error="errors.message"
+                />
                 <div class="button-wrap">
                     <Button :text="isLoading ? 'Loading...' : 'Send'" :no-pad="true" />
                 </div>
@@ -86,10 +97,6 @@ const getEmailFromAuth = function() {
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
-
-    textarea {
-        width: 470px;
-    }
 
     .input-block {
         width: 500px;
