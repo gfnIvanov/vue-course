@@ -14,6 +14,11 @@ const routes = [
         component: () => import('@/pages/Contacts.vue')
     },
     {
+        path: '/admin',
+        name: 'Admin',
+        component: () => import('@/pages/Admin.vue')
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: () => import('@/pages/NotFound.vue')

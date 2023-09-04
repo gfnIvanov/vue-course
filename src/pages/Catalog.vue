@@ -5,9 +5,10 @@ import Button from '@/components/common/Button.vue';
 import Filter from '@/components/Filter.vue';
 import { ref, onMounted } from 'vue';
 import { getProducts } from '@/services/getProducts';
-import { removeSpanTags } from '@/services/utils';
-import type { FilterFields, ProductData } from '@/types.js';
+import { empty, removeSpanTags } from '@/services/utils';
+import { getLocalProducts } from '@/services/getLocalProducts';
 import { _useFilter, _searchProducts } from '@/services/filterProducts';
+import type { FilterFields, ProductData } from '@/types.js';
 
 
 let productsOrigin: ProductData[];
@@ -15,12 +16,6 @@ const productsMutable = ref([] as ProductData[]);
 const showFilter = ref(false);
 const beforeProducts = ref('Loading...');
 const categories = new Set<string>();
-
-const emit = defineEmits(['addProduct']);
-
-const addProduct = function(data: ProductData) {
-    emit('addProduct', data)
-};
 
 const searchProducts = function(text: string) {
     productsMutable.value = _searchProducts(text, productsMutable.value);
@@ -38,11 +33,15 @@ const getAllProducts = function() {
 };
 
 onMounted(async () => {
-    let res = await getProducts();
+    let products = await getProducts();
+    const { payload, error } = await getLocalProducts();
+    if (empty(error)) {
+        products = products.concat(payload as []);
+    }
     beforeProducts.value = 'No products';
-    productsOrigin = res;
-    productsMutable.value = res;
-    res.forEach(data => {
+    productsOrigin = products;
+    productsMutable.value = products;
+    products.forEach(data => {
         categories.add(data.category);
     });
 });
@@ -66,23 +65,22 @@ onMounted(async () => {
             v-for="product in productsMutable" 
             :key="product.id" 
             :data="product" 
-            @add-product="addProduct" 
         />
     </div>
 </template>
 
 <style scoped lang="scss">
-    @import '@/style.scss';
+@import '@/style.scss';
 
-    .catalog {
-        @include content;
+.catalog {
+    @include content;
 
-        .button-block {
-            height: 20px;
-            font-size: 10px;
-            text-align: center;
-            color: gray;
-            padding: 5px;
-        }
+    .button-block {
+        height: 20px;
+        font-size: 10px;
+        text-align: center;
+        color: gray;
+        padding: 5px;
     }
+}
 </style>

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import Button from './common/Button.vue';
 import * as yup from 'yup';
+import vuexStore from '@/store/vuex';
+import InputBlock from './common/InputBlock.vue';
 import { useForm } from 'vee-validate';
 import { ref } from 'vue';
 import { checkUser } from '@/services/checkUser';
@@ -34,10 +36,11 @@ const onSubmit = handleSubmit(async formData => {
         });
         return;
     }
-    localStorage.setItem('auth', JSON.stringify({ 
+    const userData = { 
         login: formData.login, 
         admin: payload?.admin 
-    }));
+    };
+    vuexStore.dispatch('setUser', userData);
     setValues({
         login: '',
         password: '',
@@ -57,14 +60,21 @@ const password = defineInputBinds('password');
                 <Button text="close" @click="$emit('close')" image="close.svg" :no-pad="true" />
             </div>
             <form @submit="onSubmit">
-                <div class="input-block">
-                    <input placeholder="Login" v-bind="login" :disabled="isLoading">
-                </div>
-                <span class="warn">{{ errors.login }}</span>
-                <div class="input-block mt-10">
-                    <input type="password" placeholder="Password" v-bind="password" :disabled="isLoading">
-                </div>
-                <span class="warn">{{ errors.password }}</span>
+                <InputBlock 
+                    block-type="input" 
+                    p-holder="Login" 
+                    :is-dis="isLoading" 
+                    :bind-var="login" 
+                    :error="errors.login"
+                />
+                <InputBlock 
+                    type="password"
+                    block-type="input" 
+                    p-holder="Password" 
+                    :is-dis="isLoading" 
+                    :bind-var="password" 
+                    :error="errors.password"
+                />
                 <div class="button-wrap">
                     <Button :text="isLoading ? 'Loading...' : 'Log in'" :no-pad="true" />
                 </div>
@@ -82,11 +92,6 @@ const password = defineInputBinds('password');
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
-
-    .input-block {
-        width: 300px;
-        border: 1px solid gainsboro;
-    }
 
     .close-btn-wrap {
         padding: 5px 0px;

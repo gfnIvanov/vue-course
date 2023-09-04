@@ -1,0 +1,13 @@
+.grid, .grid-title {
+    margin: 10px;
+    display: flex;
+
+    .grid-cell,
+    .grid-cell-content {
+        width: 100%;
+    }
+
+    .grid-cell-content {
+        border: 1px solid gainsboro;
+    }
+}

@@ -1,19 +1,23 @@
 <script setup lang="ts">
 import Button from './common/Button.vue';
 import Counter from './common/Counter.vue';
-import { ref } from 'vue';
+import vuexStore from '@/store/vuex';
+import { computed, ref } from 'vue';
 import { empty } from '@/services/utils';
 import type { HeaderProps, MenuButtons } from '@/types';
 
 
+const btnsActive = ref<MenuButtons>({
+    'Catalog': true,
+    'Contacts': false,
+    'Admin': false
+});
+
+const bucketQuant = computed(() => vuexStore.getters.bucketQuant);
+
 const props = defineProps<HeaderProps>();
 
 const emit = defineEmits(['showLogin', 'logout']);
-
-const btnsActive = ref<MenuButtons>({
-    'Catalog': true,
-    'Contacts': false
-});
 
 const setBtnActive = function(btnName: keyof MenuButtons) {
     for (const key in btnsActive.value) {
@@ -23,7 +27,7 @@ const setBtnActive = function(btnName: keyof MenuButtons) {
 
 const setLoginLogout = function() {
     if (props.logBtnText === 'Log out') {
-        localStorage.removeItem('auth');
+        vuexStore.dispatch('delUser');
         emit('logout');
         return;
     }
@@ -51,9 +55,18 @@ const setLoginLogout = function() {
                 />
             </RouterLink>
         </div>
+        <div v-if="vuexStore.getters.admin" class="admin">
+            <RouterLink :to="{ name: 'Admin' }">
+                <Button 
+                    text="Admin" 
+                    @click="setBtnActive('Admin')" 
+                    :active="btnsActive['Admin']" 
+                />
+            </RouterLink>
+        </div>
         <div class="basket">
             <Button text="Basket" image="shopping-cart.svg">
-                <Counter v-if="!empty(productCount)" :count="productCount"/>
+                <Counter v-if="!empty(bucketQuant)" :count="bucketQuant"/>
             </Button>
         </div>
         <div class="log-in">
@@ -83,7 +96,7 @@ const setLoginLogout = function() {
         margin-left: 100px;
     }
 
-    .contacts {
+    .contacts, .admin {
         @include common-btn;
     }
 
