@@ -13,7 +13,7 @@ export const checkUser = async function(userData: UserData): Promise<UsersRespon
         } else {
             userData.admin = false;
         }
-        const res = await axios.post(`${server.url}/add-product`, {
+        const res = await axios.post(`${server.url}/check-user`, {
             headers: {
                 origin: server.url
             },

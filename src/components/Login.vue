@@ -1,34 +1,26 @@
 <script setup lang="ts">
 import Button from './common/Button.vue';
-import * as yup from 'yup';
 import vuexStore from '@/store/vuex';
-import InputBlock from './common/InputBlock.vue';
+import Base from './common/Inputs/Base.vue';
+import Password from './common/Inputs/Password.vue';
 import { useForm } from 'vee-validate';
 import { ref } from 'vue';
 import { checkUser } from '@/services/checkUser';
 import { empty } from '@/services/utils';
+import type { UserData } from '@/types';
 
 
 const isLoading = ref(false);
 
-defineProps<{ show: boolean }>();
+defineProps<{ show: boolean, modalType: 'Add user' | 'Log in' }>();
 
 const emit = defineEmits(['close', 'login']);
 
-const { setValues, setErrors, errors, handleSubmit, defineInputBinds } = useForm({
-    initialValues: {
-        login: '',
-        password: '',
-    },
-    validationSchema: yup.object({
-        login: yup.string().required(),
-        password: yup.string().min(6).required(),
-    }),
-});
+const { setErrors, handleSubmit } = useForm();
 
 const onSubmit = handleSubmit(async formData => {
     isLoading.value = true;
-    const { payload, error } = await checkUser(formData);
+    const { payload, error } = await checkUser(formData as UserData);
     isLoading.value = false;
     if (!empty(error)) {
         setErrors({
@@ -36,72 +28,51 @@ const onSubmit = handleSubmit(async formData => {
         });
         return;
     }
-    const userData = { 
-        login: formData.login, 
-        admin: payload?.admin 
+    const userData = {
+        id: payload?.id,
+        login: formData.login,
+        admin: payload?.admin
     };
     vuexStore.dispatch('setUser', userData);
-    setValues({
-        login: '',
-        password: '',
-    });
     emit('login');
     emit('close');
 });
-
-const login = defineInputBinds('login');
-const password = defineInputBinds('password');
 </script>
 
 <template>
-    <div v-if="show" class="modal-mask">        
-        <div class="login-container">
+    <div v-if="show" class="modal-mask">
+        <div class="modal-container">
             <div class="close-btn-wrap">
-                <Button text="close" @click="$emit('close')" image="close.svg" :no-pad="true" />
+                <Button
+                    text="close"
+                    @click="$emit('close')"
+                    image="close.svg"
+                    :no-pad="true"
+                />
             </div>
             <form @submit="onSubmit">
-                <InputBlock 
-                    block-type="input" 
-                    p-holder="Login" 
-                    :is-dis="isLoading" 
-                    :bind-var="login" 
-                    :error="errors.login"
+                <Base
+                    name="login"
+                    p-holder="Login"
+                    :is-dis="isLoading"
+                    :required="true"
                 />
-                <InputBlock 
-                    type="password"
-                    block-type="input" 
-                    p-holder="Password" 
-                    :is-dis="isLoading" 
-                    :bind-var="password" 
-                    :error="errors.password"
+                <Password
+                    name="password"
+                    p-holder="Password"
+                    :is-dis="isLoading"
                 />
+                <slot></slot>
                 <div class="button-wrap">
-                    <Button :text="isLoading ? 'Loading...' : 'Log in'" :no-pad="true" />
+                    <Button :text="isLoading ? 'Loading...' : modalType" :no-pad="true" />
                 </div>
-            </form>           
+            </form>
         </div>
     </div>
 </template>
 
-<style scoped lang="scss">        
-.login-container {
+<style scoped lang="scss">
+.modal-container {
     width: 300px;
-    margin: auto;            
-    padding: 10px 30px 20px;
-    background-color: #fff;
-    border-radius: 2px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-    transition: all 0.3s ease;
-
-    .close-btn-wrap {
-        padding: 5px 0px;
-        text-align: right;
-    }
-
-    .button-wrap {
-        height: 30px;
-        padding-top: 15px;
-        text-align: center;
-    }
 }
 </style>

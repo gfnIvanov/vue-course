@@ -36,13 +36,18 @@ onBeforeMount(() => {
 <template>
     <div>
         <Header
-            :log-btn-text="logBtnText" 
-            @show-login="showLogin = true" 
-            @logout="logOut" 
+            :log-btn-text="logBtnText"
+            @show-login="showLogin = true"
+            @logout="logOut"
         />
         <RouterView />
         <Teleport to="body">
-            <Login :show="showLogin" @close="showLogin = false" @login="logIn" />
+            <Login
+                :show="showLogin"
+                modal-type="Log in"
+                @close="showLogin = false"
+                @login="logIn"
+            />
         </Teleport>
         <Teleport to="body">
             <Feedback :show="showFeedback" @close="showFeedback = false" />

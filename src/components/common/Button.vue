@@ -10,7 +10,7 @@ const getClasses = computed(() => {
     const btnClasses = []
     if (empty(props.image)) {
         btnClasses.push('underline');
-    } 
+    }
     if (props.noPad) {
         btnClasses.push('no-pad');
     }

@@ -22,6 +22,7 @@ def check_user():
             if req_data['password'] != user.password:
                 return make_response({'error': 'Password mismatch'}, code)
         resp_data = {
+            'id': user.id,
             'admin': user.admin if user.admin == True else req_data.admin,
             'error': None
         }
@@ -36,7 +37,7 @@ def get_users():
         check_empty = 0
         users_data = []
         users = db_get_users()
-        
+
         for user in users:
             data = {
                 'username': user.username,
@@ -81,6 +82,16 @@ def add_product():
     try:
         product_data = request.get_json()['data']
         db_add_product(product_data)
+        return make_response('OK', 201)
+    except Exception as e:
+        return make_response(e, 500)
+
+
+@app.route('/add-order', methods=['POST'])
+def add_order():
+    try:
+        order_data = request.get_json()['data']
+        db_add_order(order_data)
         return make_response('OK', 201)
     except Exception as e:
         return make_response(e, 500)

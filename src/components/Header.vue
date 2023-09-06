@@ -10,10 +10,11 @@ import type { HeaderProps, MenuButtons } from '@/types';
 const btnsActive = ref<MenuButtons>({
     'Catalog': true,
     'Contacts': false,
-    'Admin': false
+    'Admin': false,
+    'Basket': false
 });
 
-const bucketQuant = computed(() => vuexStore.getters.bucketQuant);
+const productsInBasket = computed(() => vuexStore.getters.basket);
 
 const props = defineProps<HeaderProps>();
 
@@ -39,35 +40,40 @@ const setLoginLogout = function() {
     <div class="header">
         <div class="catalog">
             <RouterLink :to="{ name: 'Catalog' }">
-                <Button 
-                    text="Catalog" 
-                    @click="setBtnActive('Catalog')" 
-                    :active="btnsActive['Catalog']" 
+                <Button
+                    text="Catalog"
+                    @click="setBtnActive('Catalog')"
+                    :active="btnsActive['Catalog']"
                 />
             </RouterLink>
         </div>
         <div class="contacts">
             <RouterLink :to="{ name: 'Contacts' }">
-                <Button 
-                    text="Contacts" 
-                    @click="setBtnActive('Contacts')" 
-                    :active="btnsActive['Contacts']" 
+                <Button
+                    text="Contacts"
+                    @click="setBtnActive('Contacts')"
+                    :active="btnsActive['Contacts']"
                 />
             </RouterLink>
         </div>
         <div v-if="vuexStore.getters.admin" class="admin">
             <RouterLink :to="{ name: 'Admin' }">
-                <Button 
-                    text="Admin" 
-                    @click="setBtnActive('Admin')" 
-                    :active="btnsActive['Admin']" 
+                <Button
+                    text="Admin"
+                    @click="setBtnActive('Admin')"
+                    :active="btnsActive['Admin']"
                 />
             </RouterLink>
         </div>
         <div class="basket">
-            <Button text="Basket" image="shopping-cart.svg">
-                <Counter v-if="!empty(bucketQuant)" :count="bucketQuant"/>
-            </Button>
+            <RouterLink :to="{ name: 'Basket' }">
+                <Button
+                    text="Basket"
+                    image="shopping-cart.svg"
+                    @click="setBtnActive('Basket')"
+                ><Counter v-if="!empty(productsInBasket)" :count="productsInBasket.length"/>
+                </Button>
+            </RouterLink>
         </div>
         <div class="log-in">
             <Button :text="logBtnText" @click="setLoginLogout" />

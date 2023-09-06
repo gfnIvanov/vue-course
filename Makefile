@@ -8,7 +8,7 @@ TO_SERV = cd server
 web:
 	$(RUN_WEB) dev
 
-build: 
+build:
 	$(RUN_WEB) build
 
 # server

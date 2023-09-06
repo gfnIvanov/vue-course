@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Button from './common/Button.vue';
 import { ref } from 'vue';
-import { FilterFields } from '@/types';
+import type { FilterFields } from '@/types';
 
 
 const priceFrom = ref('');
@@ -13,9 +13,9 @@ const emit = defineEmits(['useFilter']);
 
 const useFilter = function() {
     let cat = selectCategory.value === 'All' ? '' : selectCategory.value;
-    emit('useFilter', { 
-        priceFrom: +priceFrom.value, 
-        priceTo: +priceTo.value, 
+    emit('useFilter', {
+        priceFrom: +priceFrom.value,
+        priceTo: +priceTo.value,
         selectCategory: cat
     } as FilterFields);
 };

@@ -27,7 +27,7 @@ export type HeaderProps = {
 
 export type FilterFields = {
     priceFrom: number
-    priceTo: number 
+    priceTo: number
     selectCategory: string
 };
 
@@ -35,9 +35,11 @@ export type MenuButtons = {
     Catalog: boolean
     Contacts: boolean
     Admin: boolean
+    Basket: boolean
 };
 
 export type UserData = {
+    id?: number
     login: string
     password: string
     admin?: boolean
@@ -53,9 +55,11 @@ export type ProductsResponse = {
     error?: string
 };
 
-export type StateUserData = Pick<UserData, 'login' | 'admin'>;
+export type StateUserData = Pick<UserData, 'id' | 'login' | 'admin'>;
 
-export type GridDataType = Partial<UserData & { username: string }> | Partial<Pick<ProductData, 'id' | 'title' | 'price' | 'category'>>;
+export type GridDataType = Partial<UserData
+                                   & { username: string }>
+                                   | Partial<Pick<ProductData, 'id' | 'title' | 'price' | 'category' | 'image'>>;
 
 export type GridProps = {
     data: GridDataType
@@ -72,3 +76,21 @@ export type InputBlockProps = {
     type?: 'password'
     bindList?: string
 };
+
+export type BaseInputProps = {
+    name: string
+    pHolder: string
+    isDis: boolean
+    required?: boolean
+    bindList?: string
+};
+
+export type OrderData = {
+    user: number
+    name: string
+    phone: string
+    email: string
+    address: string
+    compound: string
+    summ: number
+}

@@ -54,17 +54,17 @@ onMounted(async () => {
         </div>
         <div>
             <Button
-                :text="showFilter ? 'Hide filter' : 'Show filter'" 
-                @click="showFilter = !showFilter" 
-                :no-pad="true" 
+                :text="showFilter ? 'Hide filter' : 'Show filter'"
+                @click="showFilter = !showFilter"
+                :no-pad="true"
             />
         </div>
         <Filter v-if="showFilter" :categories="categories" @use-filter="useFilter" />
         <div v-if="productsMutable.length === 0" class="sys-message">{{ beforeProducts }}</div>
-        <CardProduct 
-            v-for="product in productsMutable" 
-            :key="product.id" 
-            :data="product" 
+        <CardProduct
+            v-for="product in productsMutable"
+            :key="product.id"
+            :data="product"
         />
     </div>
 </template>

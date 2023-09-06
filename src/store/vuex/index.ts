@@ -8,36 +8,46 @@ type User = StateUserData | undefined;
 const vuexStore = createStore({
     state: {
         user: undefined as User,
-        productsInBucket: [] as ProductData[]
+        productsInBasket: [] as ProductData[]
     },
     getters: {
+        user(state) {
+            return state.user || {};
+        },
         login(state) {
             return state.user?.login;
         },
         admin(state) {
             return state.user?.admin;
         },
-        bucket(state) {
-            return state.productsInBucket;
+        basket(state) {
+            return state.productsInBasket;
         },
-        bucketQuant(state) {
-            return state.productsInBucket.length;
+        fullPrice(state) {
+            const result = state.productsInBasket.reduce((sum, item) => {
+                return +item.price + sum;
+            }, 0);
+            return result.toFixed(2);
         }
     },
     mutations: {
         setUser(state, user: User) {
             state.user = user;
         },
-        addProductInBucket(state, product: ProductData) {
-            state.productsInBucket.push(product);
+        addProductInBasket(state, product: ProductData) {
+            state.productsInBasket.push(product);
+        },
+        clearBasket(state) {
+            state.productsInBasket = [];
         }
     },
     actions: {
         setUser({ commit }, userData: User) {
             const fromStorage = localStorage.getItem('auth');
             if (empty(fromStorage) && !empty(userData)) {
-                localStorage.setItem('auth', JSON.stringify({ 
-                    login: userData?.login, 
+                localStorage.setItem('auth', JSON.stringify({
+                    id: userData?.id,
+                    login: userData?.login,
                     admin: userData?.admin
                 }));
                 commit('setUser', userData);
@@ -49,8 +59,11 @@ const vuexStore = createStore({
             localStorage.removeItem('auth');
             commit('setUser');
         },
-        addProductInBucket({ commit }, product: ProductData) {
-            commit('addProductInBucket', product);
+        addProductInBasket({ commit }, product: ProductData) {
+            commit('addProductInBasket', product);
+        },
+        clearBasket({ commit }) {
+            commit('clearBasket');
         }
     }
 });
