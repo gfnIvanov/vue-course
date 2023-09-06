@@ -2,7 +2,6 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -103,4 +102,30 @@ select:not([multiple]) {
 .warn {
   font-size: 12px;
   color: brown;
+}
+
+.modal-container {
+  margin: auto;
+  padding: 10px 30px 20px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+}
+
+.input-field {
+  width: 100%;
+  border: 1px solid gainsboro;
+  margin-top: 10px;;
+}
+
+.close-btn-wrap {
+  padding: 5px 0px;
+  text-align: right;
+}
+
+.button-wrap {
+  height: 30px;
+  padding-top: 15px;
+  text-align: center;
 }

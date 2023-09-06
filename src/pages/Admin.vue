@@ -2,6 +2,7 @@
 import Button from '@/components/common/Button.vue';
 import Grid from '@/components/common/Grid/Grid.vue';
 import GridTitle from '@/components/common/Grid/GridTitle.vue';
+import Login from '@/components/Login.vue';
 import AddProduct from '@/components/AddProduct.vue';
 import { ref, onMounted } from 'vue';
 import { getAllUsers } from '@/services/getAllUsers';
@@ -14,6 +15,7 @@ const users = ref();
 const noProducts = ref('');
 const products = ref();
 const showAddProduct = ref(false);
+const showAddUser = ref(false);
 
 const usersKeys = ['username', 'password', 'admin'];
 const productsKeys = ['id', 'title', 'price', 'category'];
@@ -46,12 +48,12 @@ onMounted(() => {
     <div class="admin">
         <div class="users">
             <h3>Users</h3>
-            <Button text="Add user" :no-pad="true" />
+            <Button text="Add user" :no-pad="true" @click="showAddUser = true" />
             <div class="grid-block">
                 <div class="line" />
                 <GridTitle :keys="usersKeys" />
                 <div v-for="user in users" :key="user.username">
-                    <Grid 
+                    <Grid
                         :data="user"
                         :keys="usersKeys"
                     />
@@ -66,7 +68,7 @@ onMounted(() => {
                 <div class="line" />
                 <GridTitle :keys="productsKeys" />
                 <div v-for="product in products" :key="product.id">
-                    <Grid 
+                    <Grid
                         :data="product"
                         :keys="productsKeys"
                     />
@@ -76,10 +78,18 @@ onMounted(() => {
         </div>
     </div>
     <Teleport to="body">
-        <AddProduct 
-            :show="showAddProduct" 
+        <Login :show="showAddUser" @close="showAddUser = false" modal-type="Add user">
+            <div class="mt-10">
+                <input type="checkbox" style="width:15px; height:15px"/>
+                <span class="ml-10">admin</span>
+            </div>
+        </Login>
+    </Teleport>
+    <Teleport to="body">
+        <AddProduct
+            :show="showAddProduct"
             @close="showAddProduct = false"
-            @add-success="getProductsFromServer()" 
+            @add-success="getProductsFromServer()"
         />
     </Teleport>
 </template>
@@ -117,4 +127,4 @@ onMounted(() => {
         }
     }
 }
-</style>@/services/getProductsFromServer
+</style>

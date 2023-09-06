@@ -7,7 +7,7 @@ import type { ProductData } from '@/types.js';
 const props = defineProps<{ data: ProductData }>();
 
 const btnOnClick = function() {
-    vuexStore.dispatch('addProductInBucket', props.data);
+    vuexStore.dispatch('addProductInBasket', props.data);
 };
 </script>
 

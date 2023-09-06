@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import Button from './Button.vue';
 
 
-let text = ref('');
+const text = ref('');
 
 const emit = defineEmits(['searchProducts', 'getAll']);
 
@@ -22,10 +22,10 @@ const inputKeyUp = function(event: KeyboardEvent) {
         <form>
             <div class="flexbox">
                 <div class="input-block">
-                    <input 
-                        type="text" 
-                        placeholder="Search here..." 
-                        @keyup="inputKeyUp" 
+                    <input
+                        type="text"
+                        placeholder="Search here..."
+                        @keyup="inputKeyUp"
                         v-model="text"
                     >
                 </div>

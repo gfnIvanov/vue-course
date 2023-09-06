@@ -7,11 +7,20 @@ const props = defineProps<GridProps>();
 
 <template>
     <div class="grid">
-        <div 
+        <div
             class="grid-cell-content"
-            v-for="key in keys" 
+            v-for="key in keys"
             :key="key"
-        >{{ props.data[key as keyof GridDataType] }}</div>
+        >
+            <img
+                v-if="key === 'image'"
+                :src="(props.data[key as keyof GridDataType] as unknown as string)"
+                width="50"
+                height="50"
+                vspase="10"
+            />
+            <div v-else>{{ props.data[key as keyof GridDataType] }}</div>
+        </div>
     </div>
 </template>
 

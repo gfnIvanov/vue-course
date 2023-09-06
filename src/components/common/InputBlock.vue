@@ -8,20 +8,20 @@ defineProps<InputBlockProps>();
 
 <template>
     <div class="input-block">
-        <input 
-            v-if="blockType === 'input'" 
+        <input
+            v-if="blockType === 'input'"
             :type="type"
-            :placeholder="pHolder" 
-            v-bind="bindVar" 
+            :placeholder="pHolder"
+            v-bind="bindVar"
             :disabled="isDis"
             :list="bindList"
         />
-        <textarea 
-            v-if="blockType === 'textarea'" 
-            :rows="rows" 
-            :placeholder="pHolder" 
-            v-bind="bindVar" 
-            :disabled="isDis" 
+        <textarea
+            v-if="blockType === 'textarea'"
+            :rows="rows"
+            :placeholder="pHolder"
+            v-bind="bindVar"
+            :disabled="isDis"
         />
     </div>
     <span v-if="!empty(error)" class="warn">{{ error }}</span>

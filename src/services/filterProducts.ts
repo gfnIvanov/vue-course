@@ -7,7 +7,7 @@ export const _searchProducts = function(text: string, productsMutable: ProductDa
     return productsMutable.filter(data => {
         let title = removeSpanTags(data.title);
         let matches = title.match(regexp) || [];
-        if (matches.length > 0) {          
+        if (matches.length > 0) {
             let newStr = `<span style="background:gainsboro;">${matches[0]}</span>`;
             data.title = title.replaceAll(matches[0] as string, newStr);
             return data;

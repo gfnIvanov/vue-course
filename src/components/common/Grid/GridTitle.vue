@@ -4,9 +4,9 @@ defineProps<{ keys: string[] }>();
 
 <template>
     <div class="grid-title">
-        <div 
-            class="grid-cell" 
-            v-for="key in keys" 
+        <div
+            class="grid-cell"
+            v-for="key in keys"
             :key="key"
         >{{ key }}</div>
     </div>

@@ -18,6 +18,18 @@ class Products(db.Model):
     image = db.Column(db.String)
 
 
+class Orders(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.Integer, db.ForeignKey(Users.id), nullable=False)
+    name = db.Column(db.String, nullable=False)
+    phone = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False)
+    address = db.Column(db.String, nullable=False)
+    compound = db.Column(db.String, nullable=False)
+    summ = db.Column(db.Numeric, nullable=False)
+    processed = db.Column(db.Boolean, nullable=False, default=False)
+
+
 def create_tables():
     with app.app_context():
         db.create_all()
