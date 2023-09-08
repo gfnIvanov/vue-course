@@ -41,7 +41,6 @@ const onBlur = function() {
             :placeholder="pHolder"
             v-model="value"
             :disabled="isDis"
-            :list="bindList"
             @blur="onBlur()"
         />
     </div>

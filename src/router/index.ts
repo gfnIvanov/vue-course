@@ -1,5 +1,7 @@
-import { createRouter, createWebHistory } from 'vue-router';
 import Catalog from '@/pages/Catalog.vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import { getLocalProducts } from '@/services/getLocalProducts';
+import { empty } from '@/services/utils';
 
 
 const routes = [
@@ -7,6 +9,20 @@ const routes = [
         path: '/',
         name: 'Catalog',
         component: Catalog
+    },
+    {
+        path: '/product:id',
+        name: 'Product',
+        component: () => import('@/pages/Product.vue'),
+        beforeEnter: async (to: any, _: any, next: any) => {
+            const { payload, error } = await getLocalProducts(to.params.id);
+            if (!empty(error)) {
+                next(new Error(error));
+                return;
+            }
+            to.params.data = payload;
+            next();
+        }
     },
     {
         path: '/contacts',

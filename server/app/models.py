@@ -30,6 +30,14 @@ class Orders(db.Model):
     processed = db.Column(db.Boolean, nullable=False, default=False)
 
 
+class Comments(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    product = db.Column(db.Integer, db.ForeignKey(Products.id), nullable=False)
+    user = db.Column(db.Integer, db.ForeignKey(Users.id), nullable=False)
+    text = db.Column(db.String, nullable=False)
+    date_add = db.Column(db.DateTime, nullable=False, default=db.func.now())
+
+
 def create_tables():
     with app.app_context():
         db.create_all()

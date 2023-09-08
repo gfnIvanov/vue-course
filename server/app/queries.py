@@ -10,9 +10,12 @@ def db_add_user(user_data):
     db.session.commit()
 
 
-def db_get_user(user_name):
+def db_get_user(value, field_name):
     try:
-        return db.session.execute(db.select(models.Users).filter_by(username=user_name)).scalar_one()
+        if field_name == 'id':
+            return db.session.execute(db.select(models.Users).filter_by(id=value)).scalar_one()
+        elif field_name == 'username':
+            return db.session.execute(db.select(models.Users).filter_by(username=value)).scalar_one()
     except sqlalchemy.exc.NoResultFound:
         return None
 
@@ -21,7 +24,9 @@ def db_get_users():
     return db.session.execute(db.select(models.Users)).scalars()
 
 
-def db_get_products():
+def db_get_products(id = None):
+    if id:
+        return db.session.execute(db.select(models.Products).filter_by(id=id)).scalar_one()
     return db.session.execute(db.select(models.Products)).scalars()
 
 
@@ -43,3 +48,14 @@ def db_add_order(order_data):
                                  compound = order_data['compound'],
                                  summ = order_data['summ']))
     db.session.commit()
+
+
+def db_add_comment(comment_data):
+    db.session.add(models.Comments(product = comment_data['product'],
+                                   user = comment_data['user'],
+                                   text = comment_data['text']))
+    db.session.commit()
+
+
+def db_get_comments(product_id):
+    return db.session.execute(db.select(models.Comments).filter_by(product=product_id)).scalars()

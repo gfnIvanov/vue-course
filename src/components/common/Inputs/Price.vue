@@ -6,13 +6,12 @@ import type { BaseInputProps } from '@/types';
 
 const props = defineProps<BaseInputProps>();
 
-const { value, errorMessage } = useField<string>(() => props.name, yup.string().min(6).required());
+const { value, errorMessage } = useField<number>(() => props.name, yup.number().positive().required());
 </script>
 
 <template>
     <div class="input-field">
         <input
-            type="password"
             :placeholder="pHolder"
             v-model="value"
             :disabled="isDis"
