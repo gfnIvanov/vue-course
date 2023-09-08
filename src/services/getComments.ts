@@ -1,13 +1,12 @@
 import axios from 'axios';
 import { server } from '../../conf.json';
 import { empty } from './utils';
-import type { ProductsResponse } from '@/types';
+import type { CommentResponse } from '@/types';
 
 
-export const getLocalProducts = async function(productId?: number): Promise<ProductsResponse> {
+export const getComments = async function(productId: number): Promise<CommentResponse> {
     try {
-        const onlyOne = !empty(productId) ? `?id=${productId}` : '';
-        const res = await axios.get(`${server.url}/get-products${onlyOne}`);
+        const res = await axios.get(`${server.url}/get-comments?product=${productId}`);
         if (!empty(res.data.error)) {
             return { error: res.data.error }
         }

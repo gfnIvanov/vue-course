@@ -1,6 +1,3 @@
-import { BaseInputBinds, GenericObject } from "vee-validate";
-
-
 export type ButtonProps = {
     text: string
     active?: boolean
@@ -51,7 +48,7 @@ export type UsersResponse = {
 };
 
 export type ProductsResponse = {
-    payload?: Partial<ProductData>
+    payload?: Partial<ProductData>[]
     error?: string
 };
 
@@ -66,23 +63,14 @@ export type GridProps = {
     keys: string[]
 };
 
-export type InputBlockProps = {
-    blockType: 'input' | 'textarea'
-    pHolder: string
-    bindVar: BaseInputBinds<string | number> & GenericObject
-    isDis: boolean
-    rows?: number
-    error?: string
-    type?: 'password'
-    bindList?: string
-};
-
 export type BaseInputProps = {
     name: string
     pHolder: string
-    isDis: boolean
+    isDis?: boolean
     required?: boolean
     bindList?: string
+    tArea?: boolean
+    rows?: number
 };
 
 export type OrderData = {
@@ -94,3 +82,16 @@ export type OrderData = {
     compound: string
     summ: number
 }
+
+export type CommentData = {
+    id?: number
+    product: number
+    user: number
+    text: string
+    addDate?: string
+}
+
+export type CommentResponse = {
+    payload?: Partial<CommentData>[]
+    error?: string
+};

@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import Button from './common/Button.vue';
-import * as yup from 'yup';
-import InputBlock from './common/InputBlock.vue';
+import Base from './common/Inputs/Base.vue';
+import Price from './common/Inputs/Price.vue';
 import { useForm } from 'vee-validate';
 import { ref } from 'vue';
 import { addProduct } from '@/services/addProduct';
 import { empty } from '@/services/utils';
+import type { ProductData } from '@/types';
 
 
 const isLoading = ref(false);
@@ -14,25 +15,11 @@ defineProps<{ show: boolean }>();
 
 const emit = defineEmits(['close', 'addSuccess']);
 
-const { setValues, setErrors, errors, handleSubmit, defineInputBinds } = useForm({
-    initialValues: {
-        title: '',
-        price: '' as unknown as number,
-        category: '',
-        description: '',
-        image: ''
-    },
-    validationSchema: yup.object({
-        title: yup.string().required(),
-        price: yup.number().required(),
-        category: yup.string().required(),
-        image: yup.string().url()
-    }),
-});
+const { setErrors, handleSubmit } = useForm();
 
 const onSubmit = handleSubmit(async formData => {
     isLoading.value = true;
-    const { error } = await addProduct(formData);
+    const { error } = await addProduct(formData as ProductData);
     isLoading.value = false;
     if (!empty(error)) {
         setErrors({
@@ -40,70 +27,47 @@ const onSubmit = handleSubmit(async formData => {
         });
         return;
     }
-
     emit('addSuccess');
-    closeForm();
-});
-
-const closeForm = function() {
-    setValues({
-        title: '',
-        price: '' as unknown as number,
-        category: '',
-        description: '',
-        image: ''
-    });
     emit('close');
-};
-
-const title = defineInputBinds('title');
-const price = defineInputBinds('price');
-const category = defineInputBinds('category');
-const description = defineInputBinds('description');
-const image = defineInputBinds('image');
+});
 </script>
 
 <template>
     <div v-if="show" class="modal-mask">
         <div class="modal-container">
             <div class="close-btn-wrap">
-                <Button text="close" @click="closeForm()" image="close.svg" :no-pad="true" />
+                <Button text="close" @click="$emit('close')" image="close.svg" :no-pad="true" />
             </div>
             <form @submit="onSubmit">
-                <InputBlock
-                    block-type="input"
+                <Base
+                    name="title"
                     p-holder="Title"
                     :is-dis="isLoading"
-                    :bind-var="title"
-                    :error="errors.title"
+                    :required="true"
                 />
-                <InputBlock
-                    block-type="input"
+                <Price
+                    name="price"
                     p-holder="Price"
                     :is-dis="isLoading"
-                    :bind-var="price"
-                    :error="errors.price"
+                    :required="true"
                 />
-                <InputBlock
-                    block-type="input"
+                <Base
+                    name="category"
                     p-holder="Category"
                     :is-dis="isLoading"
-                    :bind-var="category"
-                    :error="errors.category"
+                    :required="true"
                 />
-                <InputBlock
-                    block-type="textarea"
-                    :rows="4"
+                <Base
+                    name="description"
                     p-holder="Description"
                     :is-dis="isLoading"
-                    :bind-var="description"
+                    :t-area="true"
+                    :rows="4"
                 />
-                <InputBlock
-                    block-type="input"
+                <Base
+                    name="image"
                     p-holder="Image URL"
                     :is-dis="isLoading"
-                    :bind-var="image"
-                    :error="errors.image"
                 />
                 <div class="button-wrap">
                     <Button :text="isLoading ? 'Loading...' : 'Add'" :no-pad="true" />

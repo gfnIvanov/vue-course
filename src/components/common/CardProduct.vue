@@ -14,7 +14,9 @@ const btnOnClick = function() {
 <template>
     <div class="card">
         <div><img :src="data.image" width="200" height="220" vspace="50" /></div>
-        <div v-html="data.title"></div>
+        <RouterLink :to="{ name: 'Product', params: { id: data.id } }">
+            <div v-html="data.title"></div>
+        </RouterLink>
         <div class="flexbox pt-15">
             <div class="pr-20"><b>${{ data.price }}</b></div>
             <Button text="ToBasket" @click="btnOnClick" image="shopping-cart.svg" :no-pad="true" />
@@ -33,6 +35,10 @@ const btnOnClick = function() {
     text-align: center;
     border-bottom: 2px solid gainsboro;
     margin: auto;
+
+    a {
+        color: black;
+    }
 
     fieldset {
         border: 1px solid gainsboro;

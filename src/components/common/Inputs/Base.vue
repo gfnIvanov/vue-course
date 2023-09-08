@@ -17,7 +17,15 @@ const { value, errorMessage } = useField<string>(() => props.name, requiredCheck
 
 <template>
     <div class="input-field">
+        <textarea
+            v-if="tArea"
+            :rows="rows"
+            :placeholder="pHolder"
+            v-model="value"
+            :disabled="isDis"
+        />
         <input
+            v-else
             type="text"
             :placeholder="pHolder"
             v-model="value"
