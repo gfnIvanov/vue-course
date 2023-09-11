@@ -511,6 +511,14 @@ picomatch@^2.0.4, picomatch@^2.2.1:
   resolved "https://registry.npmjs.org/picomatch/-/picomatch-2.3.1.tgz"
   integrity sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
 
+pinia@^2.1.6:
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/pinia/-/pinia-2.1.6.tgz#e88959f14b61c4debd9c42d0c9944e2875cbe0fa"
+  integrity sha512-bIU6QuE5qZviMmct5XwCesXelb5VavdOWKWaB17ggk++NUwQWWbP5YnsONTk3b752QkW9sACiR81rorpeOMSvQ==
+  dependencies:
+    "@vue/devtools-api" "^6.5.0"
+    vue-demi ">=0.14.5"
+
 postcss@^8.1.10, postcss@^8.4.27:
   version "8.4.28"
   resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.28.tgz"
@@ -615,6 +623,11 @@ vite@^4.4.5:
     rollup "^3.27.1"
   optionalDependencies:
     fsevents "~2.3.2"
+
+vue-demi@>=0.14.5:
+  version "0.14.6"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.14.6.tgz#dc706582851dc1cdc17a0054f4fec2eb6df74c92"
+  integrity sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==
 
 vue-router@^4.2.4:
   version "4.2.4"
