@@ -2,6 +2,7 @@
 import Button from './common/Button.vue';
 import Counter from './common/Counter.vue';
 import vuexStore from '@/store/vuex';
+import { useUserStore } from '../store/pinia/user';
 import { computed, ref } from 'vue';
 import { empty } from '@/services/utils';
 import type { HeaderProps, MenuButtons } from '@/types';
@@ -13,6 +14,8 @@ const btnsActive = ref<MenuButtons>({
     'Admin': false,
     'Basket': false
 });
+
+const store = useUserStore();
 
 const productsInBasket = computed(() => vuexStore.getters.basket);
 
@@ -28,7 +31,7 @@ const setBtnActive = function(btnName: keyof MenuButtons) {
 
 const setLoginLogout = function() {
     if (props.logBtnText === 'Log out') {
-        vuexStore.dispatch('delUser');
+        store.$reset();
         emit('logout');
         return;
     }
@@ -56,7 +59,7 @@ const setLoginLogout = function() {
                 />
             </RouterLink>
         </div>
-        <div v-if="vuexStore.getters.admin" class="admin">
+        <div v-if="store.admin" class="admin">
             <RouterLink :to="{ name: 'Admin' }">
                 <Button
                     text="Admin"

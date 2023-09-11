@@ -4,6 +4,7 @@ import Button from '@/components/common/Button.vue';
 import Order from '@/components/Order.vue';
 import Alert from '@/components/Alert.vue';
 import vuexStore from '@/store/vuex';
+import { useUserStore } from '../store/pinia/user';
 import { ref, computed } from 'vue';
 import { empty } from '@/services/utils';
 
@@ -12,6 +13,8 @@ const showAddOrder = ref(false);
 const showSuccessMessage = ref(false);
 
 const productsInBasket = computed(() => vuexStore.getters.basket);
+
+const store = useUserStore();
 
 const addSuccess = function() {
     showSuccessMessage.value = true;
@@ -41,7 +44,7 @@ const addSuccess = function() {
             text="Order successfully completed"
         />
         <Alert
-            v-if="empty(vuexStore.getters.login)"
+            v-if="empty(store.login)"
             :show="showAddOrder"
             @close="showAddOrder = false"
             text="You must be logged in to place an order"

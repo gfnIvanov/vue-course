@@ -3,7 +3,7 @@ import Header from './components/Header.vue';
 import Login from './components/Login.vue';
 import Footer from './components/Footer.vue';
 import Feedback from './components/Feedback.vue';
-import vuexStore from './store/vuex';
+import { useUserStore } from './store/pinia/user';
 import { onBeforeMount, ref } from 'vue';
 import { empty } from './services/utils';
 import { useRouter } from 'vue-router';
@@ -13,6 +13,8 @@ const router = useRouter()
 const showLogin = ref(false);
 const showFeedback = ref(false);
 const logBtnText = ref(empty(localStorage.getItem('auth')) ? 'Log in' : 'Log out');
+
+const store = useUserStore();
 
 const logIn = function() {
     logBtnText.value = 'Log out';
@@ -28,7 +30,7 @@ const toCatalogPage = function() {
 };
 
 onBeforeMount(() => {
-    vuexStore.dispatch('setUser');
+    store.setUser();
     toCatalogPage();
 });
 </script>

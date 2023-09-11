@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Button from './common/Button.vue';
-import vuexStore from '@/store/vuex';
 import Base from './common/Inputs/Base.vue';
 import Password from './common/Inputs/Password.vue';
+import { useUserStore } from '../store/pinia/user';
 import { useForm } from 'vee-validate';
 import { ref } from 'vue';
 import { checkUser } from '@/services/checkUser';
@@ -11,6 +11,8 @@ import type { UserData } from '@/types';
 
 
 const isLoading = ref(false);
+
+const store = useUserStore();
 
 defineProps<{ show: boolean, modalType: 'Add user' | 'Log in' }>();
 
@@ -33,7 +35,7 @@ const onSubmit = handleSubmit(async formData => {
         login: formData.login,
         admin: payload?.admin
     };
-    vuexStore.dispatch('setUser', userData);
+    store.setUser(userData);
     emit('login');
     emit('close');
 });
