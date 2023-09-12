@@ -1,9 +1,8 @@
 [tool.poetry]
-name = "server"
+name = "app"
 version = "0.1.0"
 description = "Test server for vue-course"
 authors = ["Игорь Иванов <is.ivanov@bars.group>"]
-packages = [{include = "app"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -11,6 +10,7 @@ flask = "^2.3.3"
 flask-sqlalchemy = "^3.0.5"
 pyyaml = "^6.0.1"
 flask-cors = "^4.0.0"
+python-dotenv = "^1.0.0"
 
 
 [build-system]
@@ -18,5 +18,5 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-dev_server = "manage:run_dev"
+dev_server = "manage:run_server"
 create_tables = "app.models:create_tables"

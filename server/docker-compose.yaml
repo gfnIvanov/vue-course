@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  db_server:
+    build: ./
+    container_name: db-server
+    environment:
+      - MODE=prod
+      - PYTHONUNBUFFERED=True
+    restart: on-failure
+    volumes:
+      - ./:/app/
+    ports:
+      - "5001:5000"
+    command: sh scripts/run.sh
