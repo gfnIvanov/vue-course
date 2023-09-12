@@ -86,7 +86,7 @@ export type OrderData = {
 export type CommentData = {
     id?: number
     product: number
-    user: number
+    user?: number
     text: string
     addDate?: string
 }

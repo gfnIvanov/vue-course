@@ -2,7 +2,7 @@
 import CardProduct from '@/components/common/CardProduct.vue';
 import Button from '@/components/common/Button.vue';
 import AddComment from '@/components/AddComment.vue';
-import vuexStore from '@/store/vuex';
+import { useUserStore } from '../store/pinia/user';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { empty } from '@/services/utils';
@@ -14,6 +14,8 @@ const route = useRoute();
 
 const comments = ref();
 const showAddComment = ref(false);
+
+const store = useUserStore();
 
 const productData = route.params?.data[0] as unknown as ProductData;
 
@@ -55,7 +57,7 @@ onMounted(() => {
     <Teleport to="body">
         <AddComment
             :show="showAddComment"
-            :user="vuexStore.getters.user.id"
+            :user="store.user_id"
             :product="(productData.id as number)"
             @close="showAddComment = false"
             @add-success="getCommentsFromServer()"

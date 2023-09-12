@@ -9,6 +9,9 @@ type User = StateUserData | null | undefined;
 export const useUserStore = defineStore('user', () => {
     const user = ref<User>();
 
+    const user_id = computed(() => {
+        return user.value?.id;
+    });
     const login = computed(() => {
         return user.value?.login;
     });
@@ -34,5 +37,5 @@ export const useUserStore = defineStore('user', () => {
         user.value = null;
     };
 
-    return { user, login, admin, setUser, $reset }
+    return { user, user_id, login, admin, setUser, $reset }
 });

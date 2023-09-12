@@ -9,7 +9,7 @@ import { empty } from '@/services/utils';
 
 const isLoading = ref(false);
 
-const props = defineProps<{ show: boolean, product: number, user: number }>();
+const props = defineProps<{ show: boolean, product: number, user?: number }>();
 
 const emit = defineEmits(['close', 'addSuccess']);
 
