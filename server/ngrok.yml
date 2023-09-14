@@ -1,0 +1,7 @@
+version: "2"
+authtoken: 2VJQXYmsq1yeb34bUVrE5XA2wnx_2XpwnAC74CwCfqUJx73kd
+tunnels:
+  db-server:
+    addr: 5001
+    inspect: false
+    proto: http
