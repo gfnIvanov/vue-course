@@ -17,3 +17,7 @@ serv:
 
 tab_create:
 	$(TO_SERV) && $(RUN_SERV) create_tables
+
+# docker
+build_serv:
+	$(TO_SERV) && docker-compose up --build

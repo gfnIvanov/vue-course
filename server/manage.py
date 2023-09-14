@@ -9,4 +9,4 @@ mode = os.getenv('MODE')
 
 def run_server():
     isDev = mode == 'dev'
-    app.run(debug=isDev, host='0.0.0.0')
+    app.run(debug=isDev, host='0.0.0.0', port='5101')
