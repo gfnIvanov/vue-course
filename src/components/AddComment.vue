@@ -6,27 +6,26 @@ import { ref } from 'vue';
 import { addComment } from '@/services/addComment';
 import { empty } from '@/services/utils';
 
-
 const isLoading = ref(false);
 
-const props = defineProps<{ show: boolean, product: number, user?: number }>();
+const props = defineProps<{ show: boolean; product: number; user?: number }>();
 
 const emit = defineEmits(['close', 'addSuccess']);
 
 const { setErrors, handleSubmit } = useForm();
 
-const onSubmit = handleSubmit(async (formData) => {
+const onSubmit = handleSubmit(async formData => {
     const commentData = {
         product: props.product,
         user: props.user,
-        text: formData.comment
+        text: formData.comment,
     };
     isLoading.value = true;
     const { error } = await addComment(commentData);
     isLoading.value = false;
     if (!empty(error)) {
         setErrors({
-            comment: error as string
+            comment: error as string,
         });
         return;
     }
@@ -39,7 +38,12 @@ const onSubmit = handleSubmit(async (formData) => {
     <div v-if="show" class="modal-mask">
         <div class="modal-container">
             <div class="close-btn-wrap">
-                <Button text="close" @click="$emit('close')" image="close.svg" :no-pad="true" />
+                <Button
+                    text="close"
+                    image="close.svg"
+                    :no-pad="true"
+                    @click="$emit('close')"
+                />
             </div>
             <form @submit="onSubmit">
                 <Base
@@ -51,7 +55,10 @@ const onSubmit = handleSubmit(async (formData) => {
                     :rows="5"
                 />
                 <div class="button-wrap">
-                    <Button :text="isLoading ? 'Loading...' : 'Send'" :no-pad="true" />
+                    <Button
+                        :text="isLoading ? 'Loading...' : 'Send'"
+                        :no-pad="true"
+                    />
                 </div>
             </form>
         </div>
@@ -59,7 +66,7 @@ const onSubmit = handleSubmit(async (formData) => {
 </template>
 
 <style scoped lang="scss">
- .modal-container {
+.modal-container {
     width: 500px;
 
     .input-block {

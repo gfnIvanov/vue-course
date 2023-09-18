@@ -3,8 +3,9 @@ import { server } from '../../conf.json';
 import { empty } from './utils';
 import type { UserData, UsersResponse } from '@/types';
 
-
-export const checkUser = async function(userData: UserData): Promise<UsersResponse> {
+export const checkUser = async function (
+    userData: UserData,
+): Promise<UsersResponse> {
     try {
         const fullLogin = userData.login.split(':');
         if (fullLogin[1] === 'admin') {
@@ -15,16 +16,16 @@ export const checkUser = async function(userData: UserData): Promise<UsersRespon
         }
         const res = await axios.post(`${server.url}/check-user`, {
             headers: {
-                origin: server.url
+                origin: server.url,
             },
-            data: userData
+            data: userData,
         });
         if (!empty(res.data.error)) {
-            return { error: res.data.error }
+            return { error: res.data.error };
         }
-        return { payload: res.data }
-    } catch(e) {
+        return { payload: res.data };
+    } catch (e) {
         console.error(e);
-        return { error: e as string }
+        return { error: e as string };
     }
 };

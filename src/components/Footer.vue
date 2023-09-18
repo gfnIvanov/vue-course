@@ -9,7 +9,11 @@ import { github } from '../../conf.json';
         <a :href="github.link" target="_blank">
             <Button class="github" text="GitHub" image="github.svg" />
         </a>
-        <Button class="writetous" text="Write to us" @click="$emit('showFeedback')" />
+        <Button
+            class="writetous"
+            text="Write to us"
+            @click="$emit('showFeedback')"
+        />
     </div>
 </template>
 

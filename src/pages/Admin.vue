@@ -9,7 +9,6 @@ import { getAllUsers } from '@/services/getAllUsers';
 import { empty } from '@/services/utils';
 import { getLocalProducts } from '@/services/getLocalProducts';
 
-
 const noUsers = ref('');
 const users = ref();
 const noProducts = ref('');
@@ -20,7 +19,7 @@ const showAddUser = ref(false);
 const usersKeys = ['username', 'password', 'admin'];
 const productsKeys = ['id', 'title', 'price', 'category'];
 
-const getUsersFromServer = async function() {
+const getUsersFromServer = async function () {
     const { payload, error } = await getAllUsers();
     if (!empty(error)) {
         noUsers.value = error as string;
@@ -29,7 +28,7 @@ const getUsersFromServer = async function() {
     }
 };
 
-const getProductsFromServer = async function() {
+const getProductsFromServer = async function () {
     const { payload, error } = await getLocalProducts();
     if (!empty(error)) {
         noProducts.value = error as string;
@@ -48,39 +47,45 @@ onMounted(() => {
     <div class="admin">
         <div class="users">
             <h3>Users</h3>
-            <Button text="Add user" :no-pad="true" @click="showAddUser = true" />
+            <Button
+                text="Add user"
+                :no-pad="true"
+                @click="showAddUser = true"
+            />
             <div class="grid-block">
                 <div class="line" />
                 <GridTitle :keys="usersKeys" />
                 <div v-for="user in users" :key="user.username">
-                    <Grid
-                        :data="user"
-                        :keys="usersKeys"
-                    />
+                    <Grid :data="user" :keys="usersKeys" />
                 </div>
             </div>
             <span>{{ noUsers }}</span>
         </div>
         <div class="products">
             <h3>Products</h3>
-            <Button text="Add product" :no-pad="true" @click="showAddProduct = true" />
+            <Button
+                text="Add product"
+                :no-pad="true"
+                @click="showAddProduct = true"
+            />
             <div class="grid-block">
                 <div class="line" />
                 <GridTitle :keys="productsKeys" />
                 <div v-for="product in products" :key="product.id">
-                    <Grid
-                        :data="product"
-                        :keys="productsKeys"
-                    />
+                    <Grid :data="product" :keys="productsKeys" />
                 </div>
                 <span>{{ noProducts }}</span>
             </div>
         </div>
     </div>
     <Teleport to="body">
-        <Login :show="showAddUser" @close="showAddUser = false" modal-type="Add user">
+        <Login
+            :show="showAddUser"
+            modal-type="Add user"
+            @close="showAddUser = false"
+        >
             <div class="mt-10">
-                <input type="checkbox" style="width:15px; height:15px"/>
+                <input type="checkbox" style="width: 15px; height: 15px" />
                 <span class="ml-10">admin</span>
             </div>
         </Login>
@@ -105,7 +110,8 @@ onMounted(() => {
         margin: 10px;
     }
 
-    .users, .products {
+    .users,
+    .products {
         width: 50%;
         padding: 0px 10px 10px;
         text-align: center;

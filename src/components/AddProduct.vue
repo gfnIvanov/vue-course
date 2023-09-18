@@ -8,7 +8,6 @@ import { addProduct } from '@/services/addProduct';
 import { empty } from '@/services/utils';
 import type { ProductData } from '@/types';
 
-
 const isLoading = ref(false);
 
 defineProps<{ show: boolean }>();
@@ -23,7 +22,7 @@ const onSubmit = handleSubmit(async formData => {
     isLoading.value = false;
     if (!empty(error)) {
         setErrors({
-            image: error as string
+            image: error as string,
         });
         return;
     }
@@ -36,7 +35,12 @@ const onSubmit = handleSubmit(async formData => {
     <div v-if="show" class="modal-mask">
         <div class="modal-container">
             <div class="close-btn-wrap">
-                <Button text="close" @click="$emit('close')" image="close.svg" :no-pad="true" />
+                <Button
+                    text="close"
+                    image="close.svg"
+                    :no-pad="true"
+                    @click="$emit('close')"
+                />
             </div>
             <form @submit="onSubmit">
                 <Base
@@ -64,13 +68,12 @@ const onSubmit = handleSubmit(async formData => {
                     :t-area="true"
                     :rows="4"
                 />
-                <Base
-                    name="image"
-                    p-holder="Image URL"
-                    :is-dis="isLoading"
-                />
+                <Base name="image" p-holder="Image URL" :is-dis="isLoading" />
                 <div class="button-wrap">
-                    <Button :text="isLoading ? 'Loading...' : 'Add'" :no-pad="true" />
+                    <Button
+                        :text="isLoading ? 'Loading...' : 'Add'"
+                        :no-pad="true"
+                    />
                 </div>
             </form>
         </div>

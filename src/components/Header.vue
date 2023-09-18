@@ -7,12 +7,11 @@ import { computed, ref } from 'vue';
 import { empty } from '@/services/utils';
 import type { HeaderProps, MenuButtons } from '@/types';
 
-
 const btnsActive = ref<MenuButtons>({
-    'Catalog': true,
-    'Contacts': false,
-    'Admin': false,
-    'Basket': false
+    Catalog: true,
+    Contacts: false,
+    Admin: false,
+    Basket: false,
 });
 
 const store = useUserStore();
@@ -23,13 +22,13 @@ const props = defineProps<HeaderProps>();
 
 const emit = defineEmits(['showLogin', 'logout']);
 
-const setBtnActive = function(btnName: keyof MenuButtons) {
+const setBtnActive = function (btnName: keyof MenuButtons) {
     for (const key in btnsActive.value) {
-        btnsActive.value[key as keyof MenuButtons] = (key === btnName);
+        btnsActive.value[key as keyof MenuButtons] = key === btnName;
     }
 };
 
-const setLoginLogout = function() {
+const setLoginLogout = function () {
     if (props.logBtnText === 'Log out') {
         store.$reset();
         emit('logout');
@@ -45,8 +44,8 @@ const setLoginLogout = function() {
             <RouterLink :to="{ name: 'Catalog' }">
                 <Button
                     text="Catalog"
-                    @click="setBtnActive('Catalog')"
                     :active="btnsActive['Catalog']"
+                    @click="setBtnActive('Catalog')"
                 />
             </RouterLink>
         </div>
@@ -54,8 +53,8 @@ const setLoginLogout = function() {
             <RouterLink :to="{ name: 'Contacts' }">
                 <Button
                     text="Contacts"
-                    @click="setBtnActive('Contacts')"
                     :active="btnsActive['Contacts']"
+                    @click="setBtnActive('Contacts')"
                 />
             </RouterLink>
         </div>
@@ -63,8 +62,8 @@ const setLoginLogout = function() {
             <RouterLink :to="{ name: 'Admin' }">
                 <Button
                     text="Admin"
-                    @click="setBtnActive('Admin')"
                     :active="btnsActive['Admin']"
+                    @click="setBtnActive('Admin')"
                 />
             </RouterLink>
         </div>
@@ -74,7 +73,10 @@ const setLoginLogout = function() {
                     text="Basket"
                     image="shopping-cart.svg"
                     @click="setBtnActive('Basket')"
-                ><Counter v-if="!empty(productsInBasket)" :count="productsInBasket.length"/>
+                    ><Counter
+                        v-if="!empty(productsInBasket)"
+                        :count="productsInBasket.length"
+                    />
                 </Button>
             </RouterLink>
         </div>
@@ -105,7 +107,8 @@ const setLoginLogout = function() {
         margin-left: 100px;
     }
 
-    .contacts, .admin {
+    .contacts,
+    .admin {
         @include common-btn;
     }
 

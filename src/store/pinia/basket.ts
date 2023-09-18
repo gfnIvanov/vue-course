@@ -2,7 +2,6 @@ import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import type { ProductData } from '@/types';
 
-
 export const useBasketStore = defineStore('basket', () => {
     const productsInBasket = ref<ProductData[]>([]);
 
@@ -18,16 +17,16 @@ export const useBasketStore = defineStore('basket', () => {
 
     function addProductInBasket(product: ProductData) {
         productsInBasket.value.push(product);
-    };
+    }
     function clearBasket() {
         productsInBasket.value = [];
-    };
+    }
 
     return {
         productsInBasket,
         basket,
         fullPrice,
         addProductInBasket,
-        clearBasket
-    }
+        clearBasket,
+    };
 });

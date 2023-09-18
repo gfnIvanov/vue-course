@@ -10,22 +10,21 @@ import { getLocalProducts } from '@/services/getLocalProducts';
 import { _useFilter, _searchProducts } from '@/services/filterProducts';
 import type { FilterFields, ProductData } from '@/types.js';
 
-
 let productsOrigin: ProductData[];
 const productsMutable = ref([] as ProductData[]);
 const showFilter = ref(false);
 const beforeProducts = ref('Loading...');
 const categories = new Set<string>();
 
-const searchProducts = function(text: string) {
+const searchProducts = function (text: string) {
     productsMutable.value = _searchProducts(text, productsMutable.value);
 };
 
-const useFilter = function(filter: FilterFields) {
+const useFilter = function (filter: FilterFields) {
     productsMutable.value = _useFilter(filter, productsOrigin);
 };
 
-const getAllProducts = function() {
+const getAllProducts = function () {
     productsMutable.value.forEach(data => {
         data.title = removeSpanTags(data.title);
     });
@@ -50,17 +49,26 @@ onMounted(async () => {
 <template>
     <div class="catalog">
         <div class="mt-10">
-            <SearchField @search-products="searchProducts" @get-all="getAllProducts" />
+            <SearchField
+                @search-products="searchProducts"
+                @get-all="getAllProducts"
+            />
         </div>
         <div>
             <Button
                 :text="showFilter ? 'Hide filter' : 'Show filter'"
-                @click="showFilter = !showFilter"
                 :no-pad="true"
+                @click="showFilter = !showFilter"
             />
         </div>
-        <Filter v-if="showFilter" :categories="categories" @use-filter="useFilter" />
-        <div v-if="productsMutable.length === 0" class="sys-message">{{ beforeProducts }}</div>
+        <Filter
+            v-if="showFilter"
+            :categories="categories"
+            @use-filter="useFilter"
+        />
+        <div v-if="productsMutable.length === 0" class="sys-message">
+            {{ beforeProducts }}
+        </div>
         <CardProduct
             v-for="product in productsMutable"
             :key="product.id"

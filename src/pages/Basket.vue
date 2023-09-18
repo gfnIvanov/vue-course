@@ -8,7 +8,6 @@ import { useUserStore } from '../store/pinia/user';
 import { ref, computed } from 'vue';
 import { empty } from '@/services/utils';
 
-
 const showAddOrder = ref(false);
 const showSuccessMessage = ref(false);
 
@@ -16,7 +15,7 @@ const productsInBasket = computed(() => vuexStore.getters.basket);
 
 const store = useUserStore();
 
-const addSuccess = function() {
+const addSuccess = function () {
     showSuccessMessage.value = true;
     vuexStore.commit('clearBasket');
 };
@@ -25,14 +24,13 @@ const addSuccess = function() {
 <template>
     <div class="basket">
         <div v-for="product in productsInBasket" :key="product.id">
-            <Grid
-                :data="product"
-                :keys="['image', 'title', 'price']"
-            />
+            <Grid :data="product" :keys="['image', 'title', 'price']" />
         </div>
         <span v-if="empty(productsInBasket)">No items added</span>
-        <div v-else class="mt-10" style="margin:10px">
-            <div style="text-align:right"><b>${{ vuexStore.getters.fullPrice }}</b></div>
+        <div v-else class="mt-10" style="margin: 10px">
+            <div style="text-align: right">
+                <b>${{ vuexStore.getters.fullPrice }}</b>
+            </div>
             <div class="line" />
             <Button text="Checkout" @click="showAddOrder = true" />
         </div>
@@ -40,14 +38,14 @@ const addSuccess = function() {
     <Teleport to="body">
         <Alert
             :show="showSuccessMessage"
-            @close="showSuccessMessage = false"
             text="Order successfully completed"
+            @close="showSuccessMessage = false"
         />
         <Alert
             v-if="empty(store.login)"
             :show="showAddOrder"
-            @close="showAddOrder = false"
             text="You must be logged in to place an order"
+            @close="showAddOrder = false"
         />
         <Order
             v-else

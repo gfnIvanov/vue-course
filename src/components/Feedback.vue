@@ -7,7 +7,6 @@ import vuexStore from '@/store/vuex';
 import { useForm } from 'vee-validate';
 import { ref } from 'vue';
 
-
 const mailFromAuth = ref<string | null>('');
 const isLoading = ref(false);
 
@@ -18,7 +17,7 @@ const emit = defineEmits(['close', 'login']);
 const { handleSubmit } = useForm();
 
 const validateFromAuthSchema = yup.object({
-    emailFromAuth: yup.string().email()
+    emailFromAuth: yup.string().email(),
 });
 
 const onSubmit = handleSubmit(() => {
@@ -29,11 +28,11 @@ const onSubmit = handleSubmit(() => {
     }, 1500);
 });
 
-const getEmailFromAuth = function() {
+const getEmailFromAuth = function () {
     let mailName = vuexStore.getters.login;
     mailFromAuth.value = mailName;
     return validateFromAuthSchema.isValidSync({
-        emailFromAuth: mailName
+        emailFromAuth: mailName,
     });
 };
 </script>
@@ -42,7 +41,12 @@ const getEmailFromAuth = function() {
     <div v-if="show" class="modal-mask">
         <div class="modal-container">
             <div class="close-btn-wrap">
-                <Button text="close" @click="$emit('close')" image="close.svg" :no-pad="true" />
+                <Button
+                    text="close"
+                    image="close.svg"
+                    :no-pad="true"
+                    @click="$emit('close')"
+                />
             </div>
             <form @submit="onSubmit">
                 <Email
@@ -64,7 +68,10 @@ const getEmailFromAuth = function() {
                     :rows="5"
                 />
                 <div class="button-wrap">
-                    <Button :text="isLoading ? 'Loading...' : 'Send'" :no-pad="true" />
+                    <Button
+                        :text="isLoading ? 'Loading...' : 'Send'"
+                        :no-pad="true"
+                    />
                 </div>
             </form>
         </div>
@@ -72,7 +79,7 @@ const getEmailFromAuth = function() {
 </template>
 
 <style scoped lang="scss">
- .modal-container {
+.modal-container {
     width: 500px;
 
     .input-block {

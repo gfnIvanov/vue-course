@@ -2,18 +2,19 @@ import axios from 'axios';
 import { server } from '../../conf.json';
 import type { CommentData } from '@/types';
 
-
-export const addComment = async function(commentData: CommentData): Promise<{ error?: string }> {
+export const addComment = async function (
+    commentData: CommentData,
+): Promise<{ error?: string }> {
     try {
         await axios.post(`${server.url}/add-comment`, {
             headers: {
-                origin: server.url
+                origin: server.url,
             },
-            data: commentData
+            data: commentData,
         });
-        return {}
-    } catch(e) {
+        return {};
+    } catch (e) {
         console.error(e);
-        return { error: e as string }
+        return { error: e as string };
     }
 };
