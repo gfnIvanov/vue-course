@@ -8,24 +8,25 @@ import { onBeforeMount, ref } from 'vue';
 import { empty } from './services/utils';
 import { useRouter } from 'vue-router';
 
-
-const router = useRouter()
+const router = useRouter();
 const showLogin = ref(false);
 const showFeedback = ref(false);
-const logBtnText = ref(empty(localStorage.getItem('auth')) ? 'Log in' : 'Log out');
+const logBtnText = ref(
+    empty(localStorage.getItem('auth')) ? 'Log in' : 'Log out',
+);
 
 const store = useUserStore();
 
-const logIn = function() {
+const logIn = function () {
     logBtnText.value = 'Log out';
 };
 
-const logOut = function() {
+const logOut = function () {
     toCatalogPage();
     logBtnText.value = 'Log in';
 };
 
-const toCatalogPage = function() {
+const toCatalogPage = function () {
     router.push({ name: 'Catalog' });
 };
 
@@ -58,5 +59,4 @@ onBeforeMount(() => {
     </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

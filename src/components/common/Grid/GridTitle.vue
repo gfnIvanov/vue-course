@@ -4,14 +4,10 @@ defineProps<{ keys: string[] }>();
 
 <template>
     <div class="grid-title">
-        <div
-            class="grid-cell"
-            v-for="key in keys"
-            :key="key"
-        >{{ key }}</div>
+        <div v-for="key in keys" :key="key" class="grid-cell">{{ key }}</div>
     </div>
 </template>
 
 <style scoped lang="scss">
-@import './style.scss'
+@import './style.scss';
 </style>

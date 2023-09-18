@@ -3,11 +3,10 @@ import { computed } from 'vue';
 import { empty } from '@/services/utils';
 import type { ButtonProps } from '@/types.js';
 
-
 const props = defineProps<ButtonProps>();
 
 const getClasses = computed(() => {
-    const btnClasses = []
+    const btnClasses = [];
     if (empty(props.image)) {
         btnClasses.push('underline');
     }
@@ -19,13 +18,16 @@ const getClasses = computed(() => {
     }
     return btnClasses;
 });
-
 </script>
 
 <template>
     <div class="button-block">
         <button :class="getClasses">
-            <img v-if="!empty(image)" :src="`src/assets/${image}`" :alt="text" />
+            <img
+                v-if="!empty(image)"
+                :src="`src/assets/${image}`"
+                :alt="text"
+            />
             <span v-else>{{ text }}</span>
         </button>
         <slot></slot>

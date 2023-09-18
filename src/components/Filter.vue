@@ -3,7 +3,6 @@ import Button from './common/Button.vue';
 import { ref } from 'vue';
 import type { FilterFields } from '@/types';
 
-
 const priceFrom = ref('');
 const priceTo = ref('');
 const selectCategory = ref('All');
@@ -11,12 +10,12 @@ const selectCategory = ref('All');
 defineProps<{ categories: Set<string> }>();
 const emit = defineEmits(['useFilter']);
 
-const useFilter = function() {
+const useFilter = function () {
     let cat = selectCategory.value === 'All' ? '' : selectCategory.value;
     emit('useFilter', {
         priceFrom: +priceFrom.value,
         priceTo: +priceTo.value,
-        selectCategory: cat
+        selectCategory: cat,
     } as FilterFields);
 };
 </script>
@@ -27,18 +26,24 @@ const useFilter = function() {
         <div class="flexbox">
             <div><div class="mt-10">Price:</div></div>
             <div class="input-block ml-10">
-                <input placeholder="From" v-model="priceFrom" />
+                <input v-model="priceFrom" placeholder="From" />
             </div>
             <div class="input-block ml-10">
-                <input placeholder="To" v-model="priceTo" />
+                <input v-model="priceTo" placeholder="To" />
             </div>
             <div class="ml-50">
                 <div class="mt-10">Category:</div>
             </div>
-            <div class="input-block ml-10" style="width:237px;">
+            <div class="input-block ml-10" style="width: 237px">
                 <select v-model="selectCategory">
                     <option>All</option>
-                    <option v-for="category in categories" :value="category">{{ category }}</option>
+                    <option
+                        v-for="category in categories"
+                        :key="category"
+                        :value="category"
+                    >
+                        {{ category }}
+                    </option>
                 </select>
             </div>
         </div>

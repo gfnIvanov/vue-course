@@ -9,12 +9,11 @@ import { checkUser } from '@/services/checkUser';
 import { empty } from '@/services/utils';
 import type { UserData } from '@/types';
 
-
 const isLoading = ref(false);
 
 const store = useUserStore();
 
-defineProps<{ show: boolean, modalType: 'Add user' | 'Log in' }>();
+defineProps<{ show: boolean; modalType: 'Add user' | 'Log in' }>();
 
 const emit = defineEmits(['close', 'login']);
 
@@ -26,14 +25,14 @@ const onSubmit = handleSubmit(async formData => {
     isLoading.value = false;
     if (!empty(error)) {
         setErrors({
-            password: error as string
+            password: error as string,
         });
         return;
     }
     const userData = {
         id: payload?.id,
         login: formData.login,
-        admin: payload?.admin
+        admin: payload?.admin,
     };
     store.setUser(userData);
     emit('login');
@@ -47,9 +46,9 @@ const onSubmit = handleSubmit(async formData => {
             <div class="close-btn-wrap">
                 <Button
                     text="close"
-                    @click="$emit('close')"
                     image="close.svg"
                     :no-pad="true"
+                    @click="$emit('close')"
                 />
             </div>
             <form @submit="onSubmit">
@@ -66,7 +65,10 @@ const onSubmit = handleSubmit(async formData => {
                 />
                 <slot></slot>
                 <div class="button-wrap">
-                    <Button :text="isLoading ? 'Loading...' : modalType" :no-pad="true" />
+                    <Button
+                        :text="isLoading ? 'Loading...' : modalType"
+                        :no-pad="true"
+                    />
                 </div>
             </form>
         </div>

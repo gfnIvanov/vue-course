@@ -2,12 +2,11 @@
 import { ref } from 'vue';
 import Button from './Button.vue';
 
-
 const text = ref('');
 
 const emit = defineEmits(['searchProducts', 'getAll']);
 
-const inputKeyUp = function(event: KeyboardEvent) {
+const inputKeyUp = function (event: KeyboardEvent) {
     if (text.value.length > 2) {
         emit('searchProducts', text.value);
     }
@@ -23,11 +22,11 @@ const inputKeyUp = function(event: KeyboardEvent) {
             <div class="flexbox">
                 <div class="input-block">
                     <input
+                        v-model="text"
                         type="text"
                         placeholder="Search here..."
                         @keyup="inputKeyUp"
-                        v-model="text"
-                    >
+                    />
                 </div>
                 <Button text="Basket" image="search.svg" :no-pad="true" />
             </div>

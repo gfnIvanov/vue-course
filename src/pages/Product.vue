@@ -9,7 +9,6 @@ import { empty } from '@/services/utils';
 import { getComments } from '@/services/getComments';
 import type { ProductData } from '@/types';
 
-
 const route = useRoute();
 
 const comments = ref();
@@ -19,7 +18,7 @@ const store = useUserStore();
 
 const productData = route.params?.data[0] as unknown as ProductData;
 
-const getCommentsFromServer = async function() {
+const getCommentsFromServer = async function () {
     const { payload, error } = await getComments(productData.id as number);
     if (!empty(error)) {
         comments.value = error as string;
@@ -37,19 +36,26 @@ onMounted(() => {
     <div class="product">
         <CardProduct :data="productData" />
         <div class="comments">
-            <Button text="Add comment" :no-pad="true" @click="showAddComment = true" />
+            <Button
+                text="Add comment"
+                :no-pad="true"
+                @click="showAddComment = true"
+            />
             <fieldset>
                 <legend>Comments</legend>
                 <div v-if="empty(comments)">No comments</div>
                 <div
                     v-for="comment in comments"
                     :id="comment.id"
+                    :key="comment.id"
                     class="flexbox"
-                    style="justify-content: space-around;width:100%"
+                    style="justify-content: space-around; width: 100%"
                 >
-                    <div style="width:20%">{{ comment.user }}</div>
-                    <div style="width:60%">{{ comment.text }}</div>
-                    <div style="width:20%">{{ new Date(comment.date_add).toLocaleString() }}</div>
+                    <div style="width: 20%">{{ comment.user }}</div>
+                    <div style="width: 60%">{{ comment.text }}</div>
+                    <div style="width: 20%">
+                        {{ new Date(comment.date_add).toLocaleString() }}
+                    </div>
                 </div>
             </fieldset>
         </div>
@@ -58,7 +64,7 @@ onMounted(() => {
         <AddComment
             :show="showAddComment"
             :user="store.user_id"
-            :product="(productData.id as number)"
+            :product="productData.id as number"
             @close="showAddComment = false"
             @add-success="getCommentsFromServer()"
         />

@@ -10,7 +10,6 @@ import { addOrder } from '@/services/addOrder';
 import { empty } from '@/services/utils';
 import type { ProductData, OrderData } from '@/types';
 
-
 const isLoading = ref(false);
 
 defineProps<{ show: boolean }>();
@@ -26,8 +25,8 @@ const onSubmit = handleSubmit(async formData => {
         return {
             title: product.title,
             price: product.price,
-            category: product.category
-        }
+            category: product.category,
+        };
     });
     orderData.compound = JSON.stringify(compound);
     orderData.summ = vuexStore.getters.fullPrice;
@@ -36,7 +35,7 @@ const onSubmit = handleSubmit(async formData => {
     isLoading.value = false;
     if (!empty(error)) {
         setErrors({
-            address: error as string
+            address: error as string,
         });
         return;
     }
@@ -49,7 +48,12 @@ const onSubmit = handleSubmit(async formData => {
     <div v-if="show" class="modal-mask">
         <div class="modal-container">
             <div class="close-btn-wrap">
-                <Button text="close" @click="$emit('close')" image="close.svg" :no-pad="true" />
+                <Button
+                    text="close"
+                    image="close.svg"
+                    :no-pad="true"
+                    @click="$emit('close')"
+                />
             </div>
             <form @submit="onSubmit">
                 <Base
@@ -58,16 +62,8 @@ const onSubmit = handleSubmit(async formData => {
                     :is-dis="isLoading"
                     :required="true"
                 />
-                <Phone
-                    name="phone"
-                    p-holder="Phone"
-                    :is-dis="isLoading"
-                />
-                <Email
-                    name="email"
-                    p-holder="Email"
-                    :is-dis="isLoading"
-                />
+                <Phone name="phone" p-holder="Phone" :is-dis="isLoading" />
+                <Email name="email" p-holder="Email" :is-dis="isLoading" />
                 <Base
                     name="address"
                     p-holder="Address"
@@ -75,7 +71,10 @@ const onSubmit = handleSubmit(async formData => {
                     :required="true"
                 />
                 <div class="button-wrap">
-                    <Button :text="isLoading ? 'Loading...' : 'Create order'" :no-pad="true" />
+                    <Button
+                        :text="isLoading ? 'Loading...' : 'Create order'"
+                        :no-pad="true"
+                    />
                 </div>
             </form>
         </div>

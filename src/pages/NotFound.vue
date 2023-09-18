@@ -10,6 +10,6 @@
 
 .notfound {
     @include content;
-    text-align: center;;
+    text-align: center;
 }
 </style>

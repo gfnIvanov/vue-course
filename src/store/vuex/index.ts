@@ -2,13 +2,12 @@ import { empty } from '@/services/utils';
 import { createStore } from 'vuex';
 import type { ProductData, StateUserData } from '@/types';
 
-
 type User = StateUserData | undefined;
 
 const vuexStore = createStore({
     state: {
         user: undefined as User,
-        productsInBasket: [] as ProductData[]
+        productsInBasket: [] as ProductData[],
     },
     getters: {
         user(state) {
@@ -28,7 +27,7 @@ const vuexStore = createStore({
                 return +item.price + sum;
             }, 0);
             return result.toFixed(2);
-        }
+        },
     },
     mutations: {
         setUser(state, user: User) {
@@ -39,17 +38,20 @@ const vuexStore = createStore({
         },
         clearBasket(state) {
             state.productsInBasket = [];
-        }
+        },
     },
     actions: {
         setUser({ commit }, userData: User) {
             const fromStorage = localStorage.getItem('auth');
             if (empty(fromStorage) && !empty(userData)) {
-                localStorage.setItem('auth', JSON.stringify({
-                    id: userData?.id,
-                    login: userData?.login,
-                    admin: userData?.admin
-                }));
+                localStorage.setItem(
+                    'auth',
+                    JSON.stringify({
+                        id: userData?.id,
+                        login: userData?.login,
+                        admin: userData?.admin,
+                    }),
+                );
                 commit('setUser', userData);
             } else {
                 commit('setUser', JSON.parse(fromStorage as string));
@@ -64,8 +66,8 @@ const vuexStore = createStore({
         },
         clearBasket({ commit }) {
             commit('clearBasket');
-        }
-    }
+        },
+    },
 });
 
 export default vuexStore;
