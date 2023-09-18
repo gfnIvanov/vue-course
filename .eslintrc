@@ -5,7 +5,7 @@
         "eslint:recommended",
         "plugin:prettier/recommended",
         "plugin:vue/vue3-recommended",
-        "prettier",
+        "prettier"
     ],
     "parserOptions": {
         "parser": "@typescript-eslint/parser",
