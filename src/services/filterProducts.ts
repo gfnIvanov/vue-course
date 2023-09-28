@@ -24,12 +24,12 @@ export const _useFilter = function (
     let filteredProducts = productsOrigin.slice(0);
     if (!empty(filter.priceFrom)) {
         filteredProducts = filteredProducts.filter(
-            data => +data.price >= filter.priceFrom,
+            data => +data.price >= (filter.priceFrom as number),
         );
     }
     if (!empty(filter.priceTo)) {
         filteredProducts = filteredProducts.filter(
-            data => data.price <= filter.priceTo,
+            data => data.price <= (filter.priceTo as number),
         );
     }
     if (!empty(filter.selectCategory)) {

@@ -23,9 +23,9 @@ export type HeaderProps = {
 };
 
 export type FilterFields = {
-    priceFrom: number;
-    priceTo: number;
-    selectCategory: string;
+    priceFrom?: number;
+    priceTo?: number;
+    selectCategory?: string;
 };
 
 export type MenuButtons = {
