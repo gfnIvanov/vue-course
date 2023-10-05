@@ -7,7 +7,7 @@ const props = defineProps<BaseInputProps>();
 
 const { value, errorMessage } = useField<string>(
     () => props.name,
-    yup.string().min(6).required(),
+    yup.string().required().min(6),
 );
 </script>
 
