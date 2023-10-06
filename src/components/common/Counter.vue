@@ -3,7 +3,7 @@ defineProps<{ count?: number }>();
 </script>
 
 <template>
-    <div class="counter">{{ count }}</div>
+    <div class="counter" data-testid="counter">{{ count }}</div>
 </template>
 
 <style scoped lang="scss">

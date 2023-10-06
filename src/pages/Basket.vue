@@ -23,12 +23,26 @@ const addSuccess = function () {
 
 <template>
     <div class="basket">
+        <div
+            v-if="!empty(productsInBasket)"
+            style="text-align: right; margin: 10px"
+            data-testid="clear-basket"
+        >
+            <Button
+                text="clear"
+                image="close.svg"
+                :no-pad="true"
+                @click="vuexStore.commit('clearBasket')"
+            />
+        </div>
         <div v-for="product in productsInBasket" :key="product.id">
             <Grid :data="product" :keys="['image', 'title', 'price']" />
         </div>
-        <span v-if="empty(productsInBasket)">No items added</span>
+        <span v-if="empty(productsInBasket)" data-testid="no-items"
+            >No items added</span
+        >
         <div v-else class="mt-10" style="margin: 10px">
-            <div style="text-align: right">
+            <div style="text-align: right" data-testid="full-price">
                 <b>${{ vuexStore.getters.fullPrice }}</b>
             </div>
             <div class="line" />

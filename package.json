@@ -8,8 +8,9 @@
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "unit": "jest ./src/services ./src/store",
-    "components": "vitest --run",
+    "components": "vitest --run ./src",
     "test": "yarn run unit && yarn run components",
+    "test:e2e": "npx playwright test --headed",
     "lint": "npx eslint ./src",
     "format": "npx eslint ./src --fix"
   },

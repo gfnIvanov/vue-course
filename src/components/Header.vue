@@ -67,7 +67,7 @@ const setLoginLogout = function () {
                 />
             </RouterLink>
         </div>
-        <div class="basket">
+        <div class="basket" data-testid="to-basket">
             <RouterLink :to="{ name: 'Basket' }">
                 <Button
                     text="Basket"
