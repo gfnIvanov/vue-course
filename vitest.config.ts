@@ -12,12 +12,7 @@ export default defineConfig({
     test: {
         globals: true,
         environment: 'jsdom',
-        exclude: [
-            '**/node_modules/**',
-            '**/services/**',
-            '**/store/**',
-            '**/e2e/**',
-        ],
+        exclude: ['**/node_modules/**', '**/services/**', '**/store/**'],
     },
     resolve: {
         alias: {
