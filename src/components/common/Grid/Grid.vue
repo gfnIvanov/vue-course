@@ -5,7 +5,7 @@ const props = defineProps<GridProps>();
 </script>
 
 <template>
-    <div class="grid">
+    <div class="grid" data-testid="grid-str">
         <div v-for="key in keys" :key="key" class="grid-cell-content">
             <img
                 v-if="key === 'image'"

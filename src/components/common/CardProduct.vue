@@ -11,7 +11,7 @@ const btnOnClick = function () {
 </script>
 
 <template>
-    <div class="card">
+    <div class="card" data-testid="card-product">
         <div>
             <img :src="data.image" width="200" height="220" vspace="50" />
         </div>
